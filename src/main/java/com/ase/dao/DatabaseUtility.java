@@ -24,12 +24,9 @@ public class DatabaseUtility {
     DB db;
     DBCollection coll;
     
-    public DatabaseUtility(String dbName, String dbUser, String dbPass){
-    	this.DBName = dbName;
-    	this.DBUser = dbUser;
-    	this.DBPass = dbPass;
+    public DatabaseUtility(){
+    	
     	try{
-    		Class.forName("driver");
     		mongoClient = new MongoClient("localhost", 27017);
     	}catch(Exception e){
     		e.printStackTrace();
@@ -38,12 +35,18 @@ public class DatabaseUtility {
     
     public void connect() {
     	try {
-    		db = mongoClient.getDB( "mydb" );
-        	conn = DriverManager.getConnection("jdbc:mysql://localhost/" + DBName + "?user=" + DBUser + "&password=" + DBPass);
+    		db = mongoClient.getDB("RJdb");
         }catch(Exception e){
         	e.printStackTrace();
         }
     }
+    
+    public DBCollection getCollection(){
+    	DBCollection col = db.getCollection("testData");
+    	return col;
+    }
+    
+    
     
     public ResultSet selectQuery(String SQLQuery){
     	this.SQLQuery = SQLQuery;
