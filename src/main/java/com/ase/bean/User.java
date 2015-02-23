@@ -25,6 +25,10 @@ public class User {
 		this.passWord = passWord;
 	}
 	
+	public String getPassWord(){
+		return passWord;
+	}
+	
 	public String getMember_Title(){
 		
 		return member_title;

@@ -1,30 +1,31 @@
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <html>
+
+
 <head>
 	<title>Home</title>
+	
+	<a href="aboutus.html" style="float:right; color:black">About Us</a>
+	<link rel="stylesheet" href="./resources/css/login.css">
+	<script src="./resources/js/login.js"></script>
+	<h1>RESEARCHER'S JOURNAL</h1>
 </head>
+
 <body>
-<h1>
-	Hello world!  
-</h1>
 
-<P>  The time on the server is ${serverTime}. </P>
-<p><input class="button"></input></p>
-
-<form action="Register" method=POST name=form >
-	<div class="form-group col-md-4" >Username<br> 
-	<input type="text" class="form-control" name="user" size="62" maxlength="60">
-	Password<br>
-	<input type="password" class="form-control" name="password" size="62" maxlength="60">
-	Retype Password<br>
-	<input type="password" class="form-control" name="password2" size="62" maxlength="60">
-	E-mail:<br>
-	<input type="text" class="form-control" name="email" size="62" maxlength="60"><br>
-	<input type="submit" class="btn btn-primary"value="Register"><br>
-	
-	</div>
-	
+<form action = "/Login" class="login-card">
+User Name: <br>
+<input type="text" name="username" id ="Name"></input>
+<br>
+Password:<br>
+<input type= "password" name="password" id="Password"></input>
+<br><br>
+<button type="button" onclick="javascript:redirectToMainPage();">Sign In</button>
+<br>
+<p>Don't have an account?</p>
+<button type="button" onclick="location.href='<s:url value="Signup"/>'">Sign Up</button>
 </form>
 
 </body>

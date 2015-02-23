@@ -41,8 +41,8 @@ public class DatabaseUtility {
         }
     }
     
-    public DBCollection getCollection(){
-    	DBCollection col = db.getCollection("testData");
+    public DBCollection getCollection(String collection){
+    	DBCollection col = db.getCollection(collection);
     	return col;
     }
     
