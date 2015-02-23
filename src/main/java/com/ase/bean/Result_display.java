@@ -3,31 +3,40 @@ package com.ase.bean;
 import java.util.*;
 
 public class Result_display {
+	private String display_id;
 	private List<Document> docs;
 	private Date submission_date;
 	private String category;
 	
-	private void setDocs(List<Document> docs){
+	public void setDisplayId(String display_id){
+		this.display_id = display_id;
+	}
+	
+	public String getDisplayId(){
+		return display_id;
+	}
+	
+	public void setDocs(List<Document> docs){
 		this.docs = docs;
 	}
 	
-	private List<Document> getDocs(){
+	public List<Document> getDocs(){
 		return docs;
 	}
 	
-	private void setSubmission_date(Date date){
+	public void setSubmission_date(Date date){
 		this.submission_date = date;
 	}
 	
-	private Date getSubmission_date(){
+	public Date getSubmission_date(){
 		return submission_date;
 	}
 	
-	private void setCategory(String category){
+	public void setCategory(String category){
 		this.category = category;
 	}
 	
-	private String getCategory(){
+	public String getCategory(){
 		return category;
 	}
 }

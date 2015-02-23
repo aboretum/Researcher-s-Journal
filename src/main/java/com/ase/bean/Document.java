@@ -5,6 +5,7 @@ public class Document {
 	private String docName;
 	private String docAuthor;
 	private String docContent;
+	private String docUrl;
 	
 	public void setDocType(String docType){
 		this.docType = docType;
@@ -36,6 +37,14 @@ public class Document {
 	
 	public String getDocContent(){
 		return this.docContent;
+	}
+	
+	public void setDocUrl(String docUrl){
+		this.docUrl = docUrl;
+	}
+	
+	public String getDocUrl(){
+		return docUrl;
 	}
 	
 	
