@@ -12,7 +12,6 @@ public class User {
 	public String getUserName(){
 		
 		return userName;
-		
 	}
 	
 	public void setUserName(String userName){
@@ -26,13 +25,13 @@ public class User {
 	}
 	
 	public String getPassWord(){
+		
 		return passWord;
 	}
 	
 	public String getMember_Title(){
 		
 		return member_title;
-		
 	}
 	
 	public void setMember_Title(String member_title){

@@ -14,11 +14,11 @@
 <table>
 <tr>
 <td><label>Name:</label></td>
-<td><input type="text" name="name" id ="Name"></input></td>
+<td><input type="text" name="username" id ="Name"></input></td>
 </tr>
 <tr>
 <td><label>Email Address:</label></td>
-<td><input type="text" name="email address" id ="email address"></input></td>
+<td><input type="text" name="email" id ="email"></input></td>
 </tr>
 <tr>
 <td><label>Enter Password:</label></td>

@@ -1,6 +1,7 @@
 package com.ase.dao;
 
 import com.ase.bean.User;
+import com.ase.util.MessageDigestService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BulkWriteOperation;
 import com.mongodb.BulkWriteResult;
@@ -11,7 +12,10 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.ParallelScanOptions;
+
 import java.util.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class UserDAO {
 	
@@ -25,12 +29,13 @@ public class UserDAO {
 		col = dbUtil.getCollection(dbCol);
 	}
 	
-	public void addUser(User user){
-		
-		int hashPass = user.getPassWord().hashCode();
+	public void addUser(User user) throws NoSuchAlgorithmException{
+	
+		String password = null;
+		password = MessageDigestService.getDigest(user.getPassWord());
 		
 		BasicDBObject doc = new BasicDBObject("user_name",user.getUserName()).
-				append("password",user.getPassWord()).
+				append("password",password).
 				append("member_title",user.getMember_Title());
 		col.insert(doc);
 		
@@ -49,14 +54,16 @@ public class UserDAO {
 		}finally{
 			cursor.close();
 		}
-		
-		String x = doc.get("user_name").toString();
-		System.out.println(x);
-		/*
-		user.setUserName((String)doc.get("user_name"));
-		user.setPassWord((String)doc.get("password"));
-		user.setMember_Title((String)doc.get("member_title"));
-		*/
+		if(doc==null){
+			System.out.println("no such user");
+		}else{
+			String x = doc.get("user_name").toString();
+			System.out.println(x);
+			
+			user.setUserName((String)doc.get("user_name"));
+			user.setPassWord((String)doc.get("password"));
+			user.setMember_Title((String)doc.get("member_title"));
+		}
 		
 		return user;
 	}
@@ -81,7 +88,6 @@ public class UserDAO {
 		
 		doc.put("password", user.getPassWord());
 		doc.put("member_title", user.getMember_Title());
-		
 		
 	}
 	

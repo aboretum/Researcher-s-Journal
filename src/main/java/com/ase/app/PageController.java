@@ -15,6 +15,6 @@ import com.ase.dao.DatabaseUtility;
 public class PageController {
 	private static final Logger logger = LoggerFactory.getLogger(PageController.class);
 	
-	DatabaseUtility dbUtil = new DatabaseUtility();
+	
 	
 }
