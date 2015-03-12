@@ -33,10 +33,10 @@ public class LoginController {
 	public String home(Locale locale, Model model, HttpServletRequest request) throws NoSuchAlgorithmException {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		//Date date = new Date();
+		//DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
-		String formattedDate = dateFormat.format(date);
+		//String formattedDate = dateFormat.format(date);
 		
 		String loginUser = request.getParameter("username");
         String loginPass = request.getParameter("password");

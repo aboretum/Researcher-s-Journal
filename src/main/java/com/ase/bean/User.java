@@ -4,6 +4,7 @@ public class User {
 	private String userName;
 	private String passWord;
 	private String member_title;
+	private String userGroup;
 	
 	public User(){
 		
@@ -37,6 +38,14 @@ public class User {
 	public void setMember_Title(String member_title){
 		
 		this.member_title = member_title;
+	}
+
+	public String getUserGroup() {
+		return userGroup;
+	}
+
+	public void setUserGroup(String userGroup) {
+		this.userGroup = userGroup;
 	}
 	
 }

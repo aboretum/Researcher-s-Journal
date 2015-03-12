@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ase.dao.UserDAO;
+import com.ase.dao.GroupDAO;
 import com.ase.bean.User;
+import com.ase.bean.Group;
+import com.ase.util.*;
 
 
 
@@ -28,19 +31,22 @@ public class AddUserController {
 	private static final Logger logger = LoggerFactory.getLogger(AddUserController.class);
 	
 	UserDAO userDAO = new UserDAO();
+	GroupDAO groupDAO = new GroupDAO();
 	
 	@RequestMapping(value = "/AddUser", method = RequestMethod.POST)
-	public String home(Locale locale, Model model, HttpServletRequest request) {
+	public String home(Locale locale, Model model, HttpServletRequest request) throws NoSuchAlgorithmException {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		//Date date = new Date();
+		//DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		//test database object
 		String RegUser = request.getParameter("username");
         String RegEmail = request.getParameter("email");
         String RegPass = request.getParameter("password");
         String RegPass2 = request.getParameter("confirmPassword");
+        String RegGroup = request.getParameter("groupName");
+        String RegGroupKey = request.getParameter("groupKey");
         String member_title = "researcher";
         
 		User user = new User();
@@ -49,20 +55,31 @@ public class AddUserController {
 		
 		dbUser = userDAO.getUserByName(RegUser);
 		
+		
 		if(dbUser.getUserName()==null){
 			if(RegPass.equals(RegPass2)){
 				user.setUserName(RegUser);
 				user.setPassWord(RegPass);
 				user.setMember_Title(member_title);
+				user.setUserGroup(RegGroup);
 				
-				try {
-					userDAO.addUser(user);
-				} catch (NoSuchAlgorithmException e) {
+				Group userGroup = groupDAO.getGroupByName(RegGroup);
+				if(MessageDigestService.getDigest(RegGroupKey).equals(userGroup.getGroupKey())){
+					userGroup.addUser(user);
+					groupDAO.addNewMember(user);
 					
-					e.printStackTrace();
+					try {
+						userDAO.addUser(user);
+					} catch (NoSuchAlgorithmException e) {
+						
+						e.printStackTrace();
+					}
+					System.out.println("reg complete");
+					model.addAttribute("action","regcomplete");
 				}
-				System.out.println("reg complete");
-				model.addAttribute("action","regcomplete");
+				
+				model.addAttribute("action","wrong group key");
+				
 			}else{
 				model.addAttribute("action","wrongpass");
 				System.out.println("wrong pass");
@@ -73,9 +90,9 @@ public class AddUserController {
 			System.out.println("user exists");
 		}
 		
-		String formattedDate = dateFormat.format(date);
+		//String formattedDate = dateFormat.format(date);
 		
-		model.addAttribute("serverTime", formattedDate );
+		//model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
 	}

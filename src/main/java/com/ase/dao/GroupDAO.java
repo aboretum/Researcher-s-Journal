@@ -3,6 +3,7 @@ package com.ase.dao;
 import com.ase.bean.Group;
 import com.ase.bean.User;
 import com.mongodb.BasicDBObject;
+import com.mongodb.BasicDBList;
 import com.mongodb.BulkWriteOperation;
 import com.mongodb.BulkWriteResult;
 import com.mongodb.Cursor;
@@ -12,7 +13,6 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.ParallelScanOptions;
-
 import java.util.*;
 
 public class GroupDAO {
@@ -34,9 +34,9 @@ public class GroupDAO {
 		col.insert(doc);
 	}
 	
-	public Group getGroupById(String grp_Id){
+	public Group getGroupByName(String grp_name){
 		Group grp = new Group();
-		BasicDBObject query = new BasicDBObject("group_id", grp_Id);
+		BasicDBObject query = new BasicDBObject("group_name", grp_name);
 		DBCursor cursor = col.find(query);
 		DBObject doc = null;
 		
@@ -47,6 +47,10 @@ public class GroupDAO {
 		}finally{
 			cursor.close();
 		}
+		List<User> grp_users = new ArrayList<User>();
+		BasicDBList listUsers = (BasicDBList) doc.get("group_users");
+		
+		
 		grp.setGroupName(doc.get("group_name").toString());
 		grp.setGroupId(doc.get("group_id").toString());
 		grp.setGroupKey(doc.get("group_key").toString());
@@ -54,6 +58,10 @@ public class GroupDAO {
 	}
 	
 	public void updateGroup(Group grp){
+		
+	}
+	
+	public void addNewMember(User user){
 		
 	}
 	
