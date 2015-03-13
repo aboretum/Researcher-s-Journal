@@ -26,7 +26,10 @@ Password:<br>
 <br>
 <p>Don't have an account?</p>
 <button type="button" onclick="location.href='<s:url value="Signup"/>'">Sign Up</button>
+<p>Don't have an account?</p>
+<button type="button" onclick="location.href='<s:url value="GroupSignup"/>'">Create Group</button>
 </form>
+
 
 </body>
 </html>

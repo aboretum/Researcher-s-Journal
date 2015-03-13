@@ -66,7 +66,7 @@ public class AddUserController {
 				Group userGroup = groupDAO.getGroupByName(RegGroup);
 				if(MessageDigestService.getDigest(RegGroupKey).equals(userGroup.getGroupKey())){
 					userGroup.addUser(user);
-					groupDAO.addNewMember(user);
+					groupDAO.addNewMember(userGroup.getGroupName(), user);
 					
 					try {
 						userDAO.addUser(user);
@@ -89,10 +89,6 @@ public class AddUserController {
 			model.addAttribute("action", "userexists");
 			System.out.println("user exists");
 		}
-		
-		//String formattedDate = dateFormat.format(date);
-		
-		//model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
 	}

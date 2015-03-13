@@ -1,6 +1,6 @@
 package com.ase.bean;
 
-public class textDocument extends Document{
+public class TextDocument extends Document{
 	private String textField;
 	
 	public void setTextField(String text){

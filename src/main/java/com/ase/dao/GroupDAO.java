@@ -2,6 +2,7 @@ package com.ase.dao;
 
 import com.ase.bean.Group;
 import com.ase.bean.User;
+import com.ase.util.MessageDigestService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBList;
 import com.mongodb.BulkWriteOperation;
@@ -13,6 +14,8 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.ParallelScanOptions;
+
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class GroupDAO {
@@ -26,11 +29,13 @@ public class GroupDAO {
 		col = dbUtil.getCollection(dbCol);
 	}
 	
-	public void addGroup(Group grp){
+	public void addGroup(Group grp) throws NoSuchAlgorithmException{
+		String groupKey = null;
+		groupKey = MessageDigestService.getDigest(grp.getGroupKey());
 		
 		BasicDBObject doc = new BasicDBObject("group_name", grp.getGroupName()).
 				append("group_id", grp.getGroupId()).
-				append("group_key",grp.getGroupKey());
+				append("group_key",groupKey).append("group_users", new BasicDBList());
 		col.insert(doc);
 	}
 	
@@ -59,7 +64,6 @@ public class GroupDAO {
 			grp_users.add(user);
 		}
 		
-		
 		grp.setGroupName(doc.get("group_name").toString());
 		grp.setGroupId(doc.get("group_id").toString());
 		grp.setGroupKey(doc.get("group_key").toString());
@@ -83,12 +87,6 @@ public class GroupDAO {
 			}
 		}finally{
 			cursor.close();
-		}
-		
-		if(doc.get("group_users").equals("")){
-			List<BasicDBObject> users = new ArrayList<BasicDBObject>();
-			doc.put("group_users", users);
-			col.insert(doc);
 		}
 		
 		//Add new user to the group's user list.
