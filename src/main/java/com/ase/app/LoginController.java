@@ -66,10 +66,4 @@ public class LoginController {
 
 		return "signup";
 	}
-	
-	@RequestMapping(value = "/GroupSignup", method = RequestMethod.GET)
-	public String registerGroup(Locale locale, Model model, HttpServletRequest request)throws ServletException, IOException {
-
-		return "group-signup";
-	}
 }

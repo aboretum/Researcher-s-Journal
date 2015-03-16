@@ -6,20 +6,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="./resources/css/login.css">
 <script src="./resources/js/signup.js"></script>
-<title>group signup</title>
 <h1>RESEARCHER'S JOURNAL</h1>
 </head>
 <body>
 
-<form action="AddUser" method=POST name=form class= "login-card">
+<form action="AddUser" method=POST name=form>
 <table>
 <tr>
 <td><label>Name:</label></td>
-<td><input type="text" name="username" id ="Name"></input></td>
+<td><input type="text" name="name" id ="Name"></input></td>
 </tr>
 <tr>
 <td><label>Email Address:</label></td>
-<td><input type="text" name="email" id ="email"></input></td>
+<td><input type="text" name="email address" id ="email address"></input></td>
 </tr>
 <tr>
 <td><label>Enter Password:</label></td>
@@ -33,17 +32,6 @@
 <td><label>Title:</label></td>
 <td><input type="text" name="member_title" id ="title"></input></td>
 </tr>
-
-<tr>
-<td><label>Group Name:</label></td>
-<td><input type="text" name="groupName" id ="title"></input></td>
-</tr>
-
-<tr>
-<td><label>Group Key:</label></td>
-<td><input type="text" name="groupKey" id ="title"></input></td>
-</tr>
-
 <tr>
 <td><label>Select Gender:</label></td>
 <td><select> <option value="select">Select</option>

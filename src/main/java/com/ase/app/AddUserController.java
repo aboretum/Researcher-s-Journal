@@ -67,13 +67,13 @@ public class AddUserController {
 				if(MessageDigestService.getDigest(RegGroupKey).equals(userGroup.getGroupKey())){
 					userGroup.addUser(user);
 					groupDAO.addNewMember(userGroup.getGroupName(), user);
-					
+		
 					try {
 						userDAO.addUser(user);
 					} catch (NoSuchAlgorithmException e) {
-						
 						e.printStackTrace();
 					}
+					
 					System.out.println("reg complete");
 					model.addAttribute("action","regcomplete");
 				}
@@ -89,6 +89,10 @@ public class AddUserController {
 			model.addAttribute("action", "userexists");
 			System.out.println("user exists");
 		}
+		
+		//String formattedDate = dateFormat.format(date);
+		
+		//model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
 	}
