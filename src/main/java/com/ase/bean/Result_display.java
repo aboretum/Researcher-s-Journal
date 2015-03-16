@@ -5,8 +5,9 @@ import java.util.*;
 public class Result_display {
 	private String display_id;
 	private List<Document> docs;
-	private Date submission_date;
+	private String date;
 	private String category;
+	private String display_group;
 	
 	public void setDisplayId(String display_id){
 		this.display_id = display_id;
@@ -24,19 +25,27 @@ public class Result_display {
 		return docs;
 	}
 	
-	public void setSubmission_date(Date date){
-		this.submission_date = date;
-	}
-	
-	public Date getSubmission_date(){
-		return submission_date;
-	}
-	
 	public void setCategory(String category){
 		this.category = category;
 	}
 	
 	public String getCategory(){
 		return category;
+	}
+
+	public String getDisplay_group() {
+		return display_group;
+	}
+
+	public void setDisplay_group(String display_group) {
+		this.display_group = display_group;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 }

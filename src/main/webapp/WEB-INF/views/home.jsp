@@ -15,18 +15,28 @@
 
 <body>
 
-<form action = "/Login" class="login-card">
+<form action = "Login" method=POST class="login-card">
 User Name: <br>
 <input type="text" name="username" id ="Name"></input>
 <br>
 Password:<br>
 <input type= "password" name="password" id="Password"></input>
 <br><br>
-<button type="button" onclick="javascript:redirectToMainPage();">Sign In</button>
+<button type="submit" onclick="javascript:redirectToMainPage();">Sign In</button>
 <br>
 <p>Don't have an account?</p>
 <button type="button" onclick="location.href='<s:url value="Signup"/>'">Sign Up</button>
+<p>Don't have an account?</p>
+<button type="button" onclick="location.href='<s:url value="GroupSignup"/>'">Create Group</button>
 </form>
+
+<form action = "AddDocument" method=POST class="login-card">
+
+<button type="submit" onclick="javascript:redirectToMainPage();">Add Doc</button>
+<br>
+
+</form>
+
 
 </body>
 </html>

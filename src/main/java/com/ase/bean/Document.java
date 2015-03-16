@@ -1,10 +1,13 @@
 package com.ase.bean;
 
+import java.util.*;
+
 public class Document {
 	private String docType;
 	private String docName;
 	private String docAuthor;
 	private String docContent;
+	private String docDate;
 	private String docUrl;
 	
 	public void setDocType(String docType){
@@ -45,6 +48,14 @@ public class Document {
 	
 	public String getDocUrl(){
 		return docUrl;
+	}
+
+	public String getDocDate() {
+		return docDate;
+	}
+
+	public void setDocDate(String docDate) {
+		this.docDate = docDate;
 	}
 	
 }

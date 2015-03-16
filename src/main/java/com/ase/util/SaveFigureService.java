@@ -1,5 +1,7 @@
 package com.ase.util;
 
-public class SaveFigureService {
+import com.ase.bean.FigureDocument;
 
+public class SaveFigureService {
+	
 }
