@@ -37,7 +37,8 @@ public class FigureIOService {
 	
 	public static String writeToFile(byte[] data){
 		
-		String fileName = servletContext.getRealPath("/")+ generateUniqueFileName()+".jpg"; 
+		String fileName = servletContext.getRealPath("/")+ "/resources/images/"+ generateUniqueFileName()+".jpg";
+		System.out.println(fileName);
 		try{
 			FileOutputStream fout = new FileOutputStream(fileName);
 			fout.write(data);

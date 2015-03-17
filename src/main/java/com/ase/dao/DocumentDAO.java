@@ -68,15 +68,20 @@ public class DocumentDAO {
 		document.setDocName(doc.get("doc_name").toString());
 		document.setDocType(doc.get("doc_type").toString());
 		document.setDocContent(doc.get("doc_content").toString());
-		document.setDocUrl(doc.get("doc_url").toString());
+		
 		document.setDocAuthor(doc.get("doc_author").toString());
 		document.setDocDate(doc.get("doc_date").toString());
 		
 		if(docType.equals("figure")){
 			byte[] c = (byte[])doc.get("doc_file");
-			File file = new File(FigureIOService.writeToFile(c));
+			if(c==null){
+				System.out.println("byte is null");
+			}
+			String fileName = FigureIOService.writeToFile(c);
+			File file = new File(fileName);
 			FigureDocument figureDoc = (FigureDocument)document;
 			figureDoc.setImageFile(file);
+			document.setDocUrl(file.getPath());
 		}
 		return document;
 	}

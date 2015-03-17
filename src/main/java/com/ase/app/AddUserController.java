@@ -60,7 +60,7 @@ public class AddUserController {
 			if(RegPass.equals(RegPass2)){
 				user.setUserName(RegUser);
 				user.setPassWord(RegPass);
-				user.setMember_Title(member_title);
+				user.setMember_title(member_title);
 				user.setUserGroup(RegGroup);
 				
 				Group userGroup = groupDAO.getGroupByName(RegGroup);

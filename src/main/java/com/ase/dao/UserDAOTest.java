@@ -31,7 +31,7 @@ public class UserDAOTest {
 		User user = new User();
 		user.setUserName("nacho");
 		user.setPassWord("ww");
-		user.setMember_Title("researcher");
+		user.setMember_title("researcher");
 		//userDAO.addUser(user);
 		
 	}
@@ -41,7 +41,7 @@ public class UserDAOTest {
 		User user = new User();
 		user.setUserName("nacho");
 		user.setPassWord("123");
-		user.setMember_Title("researcher");
+		user.setMember_title("researcher");
 		User newUser = userDAO.getUserByName(user.getUserName());
 		assertEquals("nacho",newUser.getUserName());
 	}

@@ -30,12 +30,12 @@ public class User {
 		return passWord;
 	}
 	
-	public String getMember_Title(){
+	public String getMember_title(){
 		
 		return member_title;
 	}
 	
-	public void setMember_Title(String member_title){
+	public void setMember_title(String member_title){
 		
 		this.member_title = member_title;
 	}

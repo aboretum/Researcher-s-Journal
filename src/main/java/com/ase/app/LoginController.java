@@ -48,7 +48,7 @@ public class LoginController {
         	HttpSession session = request.getSession(true);
         	model.addAttribute(user);
         	session.setAttribute("username", loginUser);
-        	session.setAttribute("member_title", user.getMember_Title());
+        	session.setAttribute("member_title", user.getMember_title());
         	System.out.println("You have successfully logged in");
         	
         	
@@ -66,5 +66,11 @@ public class LoginController {
 	public String register(Locale locale, Model model, HttpServletRequest request)throws ServletException, IOException {
 
 		return "signup";
+	}
+	
+	@RequestMapping(value = "/GroupSignup", method = RequestMethod.GET)
+	public String groupRegister(Locale locale, Model model, HttpServletRequest request)throws ServletException, IOException {
+
+		return "group-signup";
 	}
 }

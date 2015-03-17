@@ -36,7 +36,8 @@ public class UserDAO {
 		
 		BasicDBObject doc = new BasicDBObject("user_name",user.getUserName()).
 				append("password",password).
-				append("member_title",user.getMember_Title());
+				append("member_title",user.getMember_title()).
+				append("user_group", user.getUserGroup());
 		col.insert(doc);
 		
 	}
@@ -62,7 +63,8 @@ public class UserDAO {
 			
 			user.setUserName((String)doc.get("user_name"));
 			user.setPassWord((String)doc.get("password"));
-			user.setMember_Title((String)doc.get("member_title"));
+			user.setMember_title((String)doc.get("member_title"));
+			user.setUserGroup((String)doc.get("user_group"));
 		}
 		
 		return user;
@@ -87,7 +89,7 @@ public class UserDAO {
 		}
 		
 		doc.put("password", user.getPassWord());
-		doc.put("member_title", user.getMember_Title());
+		doc.put("member_title", user.getMember_title());
 		
 	}
 	

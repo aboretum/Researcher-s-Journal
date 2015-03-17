@@ -59,7 +59,7 @@ public class GroupDAO {
 			User user = new User();
 			user.setUserName(userObj.get("user_name").toString());
 			user.setPassWord(userObj.get("password").toString());
-			user.setMember_Title(userObj.get("member_title").toString());
+			user.setMember_title(userObj.get("member_title").toString());
 			user.setUserGroup(grp_name);
 			grp_users.add(user);
 		}
@@ -93,7 +93,7 @@ public class GroupDAO {
 		BasicDBObject push = new BasicDBObject();
 		push.put("$push", new BasicDBObject("group_users",new BasicDBObject("user_name", user.getUserName()).
 				append("password", user.getPassWord()).
-				append("member_title", user.getMember_Title()).
+				append("member_title", user.getMember_title()).
 				append("user_group", user.getUserGroup())));
 		col.update(query, push);
 		
