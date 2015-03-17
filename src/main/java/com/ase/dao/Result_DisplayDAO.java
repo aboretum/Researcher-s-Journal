@@ -28,7 +28,7 @@ public class Result_DisplayDAO {
 	
 	public void addResultDisplay(Result_display result_display){
 		BasicDBObject doc = new BasicDBObject("display_id", result_display.getDisplayId()).
-				append("display_date", result_display.getSubmission_date()).
+				append("display_date", new Date()).
 				append("display_category",result_display.getCategory());
 		col.insert(doc);
 	}
@@ -49,7 +49,7 @@ public class Result_DisplayDAO {
 		
 		display.setDisplayId(doc.get("display_id").toString());
 		display.setCategory(doc.get("display_category").toString());
-		display.setSubmission_date((Date)doc.get("display_date"));
+		display.setDate(doc.get("display_date").toString());
 		
 		return display;
 	}

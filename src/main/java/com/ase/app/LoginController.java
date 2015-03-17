@@ -30,7 +30,7 @@ public class LoginController {
 	private UserDAO userDAO = new UserDAO();
 	
 	@RequestMapping(value = "/Login", method = RequestMethod.POST)
-	public String home(Locale locale, Model model, HttpServletRequest request) throws NoSuchAlgorithmException {
+	public String login(Locale locale, Model model, HttpServletRequest request) throws NoSuchAlgorithmException {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		//Date date = new Date();
@@ -50,6 +50,7 @@ public class LoginController {
         	session.setAttribute("username", loginUser);
         	session.setAttribute("member_title", user.getMember_Title());
         	System.out.println("You have successfully logged in");
+        	
         	
         }else{
         	model.addAttribute("action","wrong pass");

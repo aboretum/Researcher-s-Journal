@@ -35,7 +35,7 @@ public class LoginControllerTest {
 		
 		Model model = new ExtendedModelMap();
 		
-		String resultText = loginController.home(null, model, request);
+		String resultText = loginController.login(null, model, request);
 		assertEquals(resultText, "info");
 	}
 
