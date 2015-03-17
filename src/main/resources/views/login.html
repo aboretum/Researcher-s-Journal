@@ -1,0 +1,58 @@
+ <!DOCTYPE html>
+<html lang="en">
+<script src="login.js"></script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+
+ <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" style="font-size:24px" href="#">Researcher's Journal</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li class="active"><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div style="margin-left:8px"
+ <form class="form-inline" role="form">
+  <div class="form-group">
+    <label for="username">User Name:</label>
+    <br/>
+    <input id ="login_user" type="email" class="form-control" >
+    <p id="user_validation" hidden=true> Enter the username</p>
+    <br/>
+  </div>
+  <br/>
+  <br/>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <br/>
+    <input id="login_password" type="password" class="form-control" >
+    <p id="password_validation" hidden=true> Password is minimum 6 characters long</p>
+    <br/>
+  </div>
+  <br/>
+  <br/>
+  <button id="login_button" type="submit" class="btn btn-primary" onclick="javascript:login_user();">Login</button>
+</form>
+</div>
+
+</body>
+</html>
+</div>
