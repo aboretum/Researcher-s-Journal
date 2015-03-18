@@ -37,9 +37,6 @@ public class AddUserController {
 	public String home(Locale locale, Model model, HttpServletRequest request) throws NoSuchAlgorithmException {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		//Date date = new Date();
-		//DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
 		//test database object
 		String RegUser = request.getParameter("username");
         String RegEmail = request.getParameter("email");

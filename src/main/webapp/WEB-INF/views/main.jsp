@@ -1,5 +1,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" isELIgnored="false"
+pageEncoding="ISO-8859-1"%>
 <%@ page session="false" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -115,7 +117,7 @@
                         Member of: ${user.userGroup} 
                     </div>
                     <div class="col-lg-3 col-md-6">
-                        Area of research:
+                        Area of research: ${userGroup.groupArea} 
                     </div>
                 </div>
                 <br><hr>
@@ -134,8 +136,8 @@
                                 <div class="row">
                                     
                                     <div class="col-xs-9 text-left">
-                                        <div class="huge">Author 1</div>
-                                        <div>PNut</div>
+                                        <div class="huge">${doc.docAuthor} </div>
+                                        <div>${doc.docName}</div>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +145,7 @@
                                 <div class="panel-footer">
       
                                     <span class="pull-left" onclick="javascript:load_content('pnuts');">
-                                    	<img class="thumb-nail" src="${doc.docURL} " width ="800" height="600" />
+                                    	<img class="thumb-nail" src=".${doc.docUrl}" width ="900" height="600" />
 									</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>

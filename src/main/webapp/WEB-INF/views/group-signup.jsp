@@ -30,18 +30,7 @@
 <td><input type="text" name="field_study" id ="field_of_study"></input></td>
 </tr>
 
-<tr>
-<td><label>Area of interest:</label></td>
- <td><select> <option value="select">Select</option>
-  <option value="Aeronautics">Aeronautics</option>
-  <option value="Computer Science">Computer Science</option>
-  <option value="Environmental Science">Environmental Science</option>
-  <option value="Food Science">Food Science</option>
-  <option value="Mathematics">Mathematics</option>
-  <option value="Medical Science">Medical Science</option>
-</select></td>
 
-</tr>
 </table>
 <br>
 <button type="sumbit" name="submit" id="submitButton" >Create group</button>

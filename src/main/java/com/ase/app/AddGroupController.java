@@ -5,6 +5,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,21 +28,25 @@ public class AddGroupController {
 	private GroupDAO grpDAO = new GroupDAO();
 	
 	@RequestMapping(value = "/AddGroup", method = RequestMethod.POST)
-	public String home(Locale locale, Model model) throws NoSuchAlgorithmException {
+	public String addGroup(Locale locale, Model model, HttpServletRequest request) throws NoSuchAlgorithmException {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		//test database object
-		String groupName = "hot_science";
+		//test database object
+		String groupName = request.getParameter("group_name");
 		String groupId = "12345";
-		String groupKey = "abcde";
+		String groupKey = request.getParameter("group_key");
+		String groupKeyConfirm = request.getParameter("confirm_group_key");
+		String area_of_interest = request.getParameter("field_study");;
+		
 		
 		Group grp = new Group();
 		grp.setGroupName(groupName);
 		grp.setGroupId(groupId);
 		grp.setGroupKey(groupKey);
-		
+		grp.setGroupArea(area_of_interest);
 		grpDAO.addGroup(grp);
 		
 		String formattedDate = dateFormat.format(date);

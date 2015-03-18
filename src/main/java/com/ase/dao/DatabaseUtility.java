@@ -16,7 +16,7 @@ import com.mongodb.ParallelScanOptions;
 
 
 public class DatabaseUtility {
-	String DBName, DBUser, DBPass, SQLQuery;
+
     Connection conn;
     Statement stmt;
     ResultSet result;
@@ -44,36 +44,6 @@ public class DatabaseUtility {
     public DBCollection getCollection(String collection){
     	DBCollection col = db.getCollection(collection);
     	return col;
-    }
-    
-    
-    
-    public ResultSet selectQuery(String SQLQuery){
-    	this.SQLQuery = SQLQuery;
-    	
-        try {
-        	stmt = conn.createStatement();
-            result = stmt.executeQuery( SQLQuery );
-        }
-        catch( Exception e ){}
-    	return result;
-    }
-    
-    public void query(String SQLQuery){
-    	this.SQLQuery = SQLQuery;
-        try {
-        	stmt = conn.createStatement();
-            stmt.executeUpdate(SQLQuery);
-        }
-        catch( Exception e ){}
-    }
-    
-    public void close(){
-    	try {
-        	stmt.close();
-            conn.close();
-        }
-        catch(Exception e){}
     }
     
     

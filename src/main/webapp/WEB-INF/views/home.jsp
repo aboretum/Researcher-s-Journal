@@ -30,12 +30,7 @@ Password:<br>
 <button type="button" onclick="location.href='<s:url value="GroupSignup"/>'">Create Group</button>
 </form>
 
-<form action = "AddDocument" method=POST class="login-card">
 
-<button type="submit" onclick="javascript:redirectToMainPage();">Add Doc</button>
-<br>
-
-</form>
 
 
 </body>

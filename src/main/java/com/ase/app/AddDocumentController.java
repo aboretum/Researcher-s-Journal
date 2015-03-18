@@ -37,26 +37,19 @@ public class AddDocumentController implements ServletContextAware {
 	public String addDoc(Locale locale, Model model, HttpServletRequest request)  {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		//Date date = new Date();
-		//DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		//test database transferring object
-		
         String docType = "figure";
         
         if(docType.equals("figure")){
      
-        	String fileName = "/resources/images/background.jpg";
+        	String fileName = "/resources/images/Figure test.jpg";
         	
         	FigureDocument doc = new FigureDocument();
-        	doc.setDocAuthor("chouchou");
+        	doc.setDocAuthor("Hawlking");
         	doc.setDocContent("nocontent");
-        	doc.setDocName("springData");
+        	doc.setDocName("springData2");
         	doc.setDocType("figure");
         	doc.setDocUrl("foo.com");
-        	if(servletContext == null){
-        		System.out.println("no such servlet");
-        	}
+        	
             File image = new File(servletContext.getRealPath(fileName));
             doc.setImageFile(image);
             docDAO.addDocument(doc);

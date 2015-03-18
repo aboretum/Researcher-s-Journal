@@ -4,11 +4,13 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +29,14 @@ import com.ase.dao.UserDAO;
 @Controller
 public class HomeController {
 	
+	@Autowired
+	ServletContext servletContext;
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	private UserDAO userDAO = new UserDAO();
 	private GroupDAO groupDAO = new GroupDAO();
 	private DocumentDAO DocDAO = new DocumentDAO();
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -43,12 +49,17 @@ public class HomeController {
 		if(userName!=null){
 			User user = userDAO.getUserByName(userName);
 			Group userGroup = groupDAO.getGroupByName(user.getUserGroup());
-			model.addAttribute(user);
-			model.addAttribute(userGroup);
+			
+			model.addAttribute("user", user);
+			model.addAttribute("userGroup", userGroup);
 			
 			Document doc = new Document();
-			//doc = DocDAO.getDocumentByName("springData");
-			model.addAttribute(doc);
+			DocDAO.setServletContext(this.servletContext);
+			doc = DocDAO.getDocumentByName("springData2");
+			
+			model.addAttribute("doc", doc);
+			
+			System.out.println(doc.getDocUrl());
 		}
 		
 		

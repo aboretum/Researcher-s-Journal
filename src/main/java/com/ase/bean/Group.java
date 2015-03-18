@@ -6,6 +6,7 @@ public class Group {
 	private String groupName;
 	private String groupId;
 	private String groupKey;
+	private String groupArea;
 	private int numUsers;
 	private List<User> users; 
 	
@@ -56,6 +57,14 @@ public class Group {
 	
 	public List<User> getUsers(){
 		return this.users;
+	}
+
+	public String getGroupArea() {
+		return groupArea;
+	}
+
+	public void setGroupArea(String groupArea) {
+		this.groupArea = groupArea;
 	}
 	
 }

@@ -18,13 +18,20 @@ import com.ase.util.FigureIOService;
 import java.io.*;
 import java.util.*;
 
+import javax.servlet.ServletContext;
+
 import org.bson.types.Binary;
+
+
+
 
 public class DocumentDAO {
 	private String dbCol = "documents";
 	private DatabaseUtility dbUtil;
 	private DBCollection col;
+	ServletContext servletContext;
 	
+
 	public DocumentDAO(){
 		dbUtil = new DatabaseUtility();
 		dbUtil.connect();
@@ -77,13 +84,38 @@ public class DocumentDAO {
 			if(c==null){
 				System.out.println("byte is null");
 			}
-			String fileName = FigureIOService.writeToFile(c);
+			String fileName = writeToFile(c);
 			File file = new File(fileName);
-			FigureDocument figureDoc = (FigureDocument)document;
+			FigureDocument figureDoc = new FigureDocument();
+			figureDoc.setDocName(doc.get("doc_name").toString());
+			figureDoc.setDocType(doc.get("doc_type").toString());
+			figureDoc.setDocAuthor(doc.get("doc_author").toString());
+			figureDoc.setDocDate(doc.get("doc_date").toString());
+			
+			figureDoc.setDocContent(doc.get("doc_content").toString());
 			figureDoc.setImageFile(file);
-			document.setDocUrl(file.getPath());
+			figureDoc.setDocUrl(fileName);
+			document = (Document)figureDoc;
 		}
 		return document;
+	}
+	
+	
+	public String writeToFile(byte[] data){
+		String fileNameBefore = "/resources/images/"+FigureIOService.generateUniqueFileName()+".jpg";
+		String fileName = servletContext.getRealPath(fileNameBefore);
+		
+		try{
+			FileOutputStream fout = new FileOutputStream(fileName);
+			fout.write(data);
+			fout.flush();
+			fout.close();
+			System.out.println("data written");
+		}catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		return fileNameBefore;
 	}
 	
 	public void updateDocument(Document document){
@@ -94,4 +126,7 @@ public class DocumentDAO {
 		
 	}
 	
+	public void setServletContext(ServletContext context){
+		this.servletContext = context;
+	}
 }
