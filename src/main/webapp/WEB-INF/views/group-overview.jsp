@@ -9,7 +9,6 @@ pageEncoding="ISO-8859-1"%>
 <head>
 
 <script src="./resources/js/main.js"></script>
-
     <script>
     function startTime() {
         var today=new Date();
@@ -45,7 +44,6 @@ pageEncoding="ISO-8859-1"%>
 
     <!-- Custom CSS -->
     <link href="./resources/css/simple-sidebar.css" rel="stylesheet">
-    <link href="./resources/css/layout.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -64,7 +62,7 @@ pageEncoding="ISO-8859-1"%>
     <div>
       <ul class="nav navbar-nav">
         <li class="active"><a href="/app/">Main Page</a></li>
-        <li><a href="GroupInfo">Group Information</a></li>
+        <li><a href="about.html">Group Information</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -108,40 +106,29 @@ pageEncoding="ISO-8859-1"%>
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div align="right" id="time" style="font-size:15px"></div><br><hr>
+                <h4>Welcome to group: ${userGroup.groupName}</h4>
+                <br>
                 <div class = "row" style="font-size:15px">
-                	<div class="col-lg-3 col-md-6">
-                        User: ${user.userName}
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        Title: ${user.member_title}
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        Member of: ${user.userGroup} 
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        Area of research: ${userGroup.groupArea} 
-                    </div>
+                	<table class="table table-hover">
+                		<thead>
+                		<tr>
+                		<th>User Name</th>
+						<th>Member Title</th>
+						<th>User Group</th>
+						</tr>
+						</thead>
+                		<c:forEach items="${userList}" var="user">					
+						<tr>
+						<td>${user.userName}</td>
+						<td>${user.member_title}</td>
+						<td>${user.userGroup}</td>
+						</tr>
+						</c:forEach>
+                	</table>
+                   
                 </div>
-                <br><hr>
-                <h4>Upload a new Document</h4>
-                    <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data" >
-                    <div class="row">
-                    	<div class="col-md-3 "><input type="file" name="fileField" ></div>
-                    	<div class="col-md-3 "><input type="submit" class="btn btn-primary" name="submit" value="Submit" ></div>
-                    </div>
-                        
-                        
-                    </form> 
+                <br>
                     
-                <h4>Or drag and drop files below</h4>
-                 <div class="row">
-                 	<div class="col-lg-10">
-                 		<div class="upload-drop-zone" id="drop-zone">
-            			Just drag and drop files here
-          				</div>
-                 	</div>
-                 </div>
-          			
                 <hr>
                 <h4> Recently Added Documents </h4>
                 <br/>
@@ -161,7 +148,7 @@ pageEncoding="ISO-8859-1"%>
                                 <div class="panel-footer">
       
                                     <span class="pull-left" onclick="javascript:load_content('pnuts');">
-                                    	<img class="thumb-nail" src=".${doc.docUrl}" width ="720" height="420" />
+                                    	<img class="thumb-nail" src=".${doc.docUrl}" width ="900" height="600" />
 									</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
@@ -297,6 +284,6 @@ pageEncoding="ISO-8859-1"%>
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-	<script src="./resources/js/dragdrop.js"></script>
+	
 </body>
 </html>

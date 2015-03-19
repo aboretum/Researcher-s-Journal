@@ -1,11 +1,12 @@
 package com.ase.app;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ase.bean.Document;
 import com.ase.bean.FigureDocument;
 import com.ase.bean.Group;
 import com.ase.bean.User;
 import com.ase.dao.DocumentDAO;
+import com.ase.dao.GroupDAO;
+import com.ase.dao.UserDAO;
 import com.ase.util.MessageDigestService;
 
 import java.io.*;
@@ -31,17 +36,21 @@ public class AddDocumentController implements ServletContextAware {
 	@Autowired
 	ServletContext servletContext;
 	
-	DocumentDAO docDAO = new DocumentDAO();
-	
+	private UserDAO userDAO = new UserDAO();
+	private DocumentDAO DocDAO = new DocumentDAO();
+	private GroupDAO groupDAO = new GroupDAO();
+
 	@RequestMapping(value = "/AddDocument", method = RequestMethod.POST)
-	public String addDoc(Locale locale, Model model, HttpServletRequest request)  {
+	public String addDoc(Locale locale, Model model, HttpServletRequest request, 
+			@RequestParam(value="fileField")MultipartFile figure)  {
+		
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
         String docType = "figure";
         
         if(docType.equals("figure")){
-     
-        	String fileName = "/resources/images/Figure test.jpg";
+        	
+        	String fileName = "/resources/images/testFigure.jpg";
         	
         	FigureDocument doc = new FigureDocument();
         	doc.setDocAuthor("Hawlking");
@@ -50,14 +59,37 @@ public class AddDocumentController implements ServletContextAware {
         	doc.setDocType("figure");
         	doc.setDocUrl("foo.com");
         	
-            File image = new File(servletContext.getRealPath(fileName));
+        	File image = null;
+        	try{
+        		image = new File(servletContext.getRealPath(fileName));
+            
+            FileUtils.writeByteArrayToFile(image, figure.getBytes());
+        	}catch(IOException e){
+        		;
+        	}
+        	
             doc.setImageFile(image);
-            docDAO.addDocument(doc);
+            DocDAO.addDocument(doc);
         }
         
+        HttpSession session = request.getSession(true);
+		String userName = (String)session.getAttribute("username");
+		
+        if(userName!=null){
+			User user = userDAO.getUserByName(userName);
+			Group userGroup = groupDAO.getGroupByName(user.getUserGroup());
+			
+			model.addAttribute("user", user);
+			model.addAttribute("userGroup", userGroup);
+			
+			Document doc = new Document();
+			DocDAO.setServletContext(this.servletContext);
+			doc = DocDAO.getDocumentByName("springData2");
+			
+			model.addAttribute("doc", doc);
+		}
         
-        
-		return "home";
+		return "index";
 	}
 
 	@Override

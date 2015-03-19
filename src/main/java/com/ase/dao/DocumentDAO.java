@@ -70,6 +70,10 @@ public class DocumentDAO {
 			cursor.close();
 		}
 		
+		if(doc == null){
+			return document;
+		}
+		
 		String docType = doc.get("doc_type").toString();
 		
 		document.setDocName(doc.get("doc_name").toString());
