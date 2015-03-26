@@ -11,8 +11,9 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.ParallelScanOptions;
-
+import com.ase.bean.Document;
 import com.ase.bean.Result_display;
+
 import java.util.*;
 
 public class Result_DisplayDAO {
@@ -55,6 +56,10 @@ public class Result_DisplayDAO {
 	}
 	
 	public void updateResult_display(Result_display display){
+		
+	}
+	
+	public void addNewDocument(String displayDate, Document doc){
 		
 	}
 	

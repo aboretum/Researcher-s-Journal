@@ -1,5 +1,7 @@
 package com.ase.app;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
@@ -24,6 +26,7 @@ import com.ase.bean.Group;
 import com.ase.bean.User;
 import com.ase.dao.DocumentDAO;
 import com.ase.dao.GroupDAO;
+import com.ase.dao.Result_DisplayDAO;
 import com.ase.dao.UserDAO;
 import com.ase.util.MessageDigestService;
 
@@ -39,12 +42,16 @@ public class AddDocumentController implements ServletContextAware {
 	private UserDAO userDAO = new UserDAO();
 	private DocumentDAO DocDAO = new DocumentDAO();
 	private GroupDAO groupDAO = new GroupDAO();
+	private Result_DisplayDAO displayDAO = new Result_DisplayDAO();
 
 	@RequestMapping(value = "/AddDocument", method = RequestMethod.POST)
 	public String addDoc(Locale locale, Model model, HttpServletRequest request, 
 			@RequestParam(value="fileField")MultipartFile figure)  {
 		
 		logger.info("Welcome home! The client locale is {}.", locale);
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		String localDate = dateFormat.format(date);
 		
         String docType = "figure";
         
@@ -70,6 +77,8 @@ public class AddDocumentController implements ServletContextAware {
         	
             doc.setImageFile(image);
             DocDAO.addDocument(doc);
+            displayDAO.addNewDocument(localDate, doc);
+            
         }
         
         HttpSession session = request.getSession(true);

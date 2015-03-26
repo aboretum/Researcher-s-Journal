@@ -17,9 +17,7 @@ import com.ase.util.FigureIOService;
 
 import java.io.*;
 import java.util.*;
-
 import javax.servlet.ServletContext;
-
 import org.bson.types.Binary;
 
 
