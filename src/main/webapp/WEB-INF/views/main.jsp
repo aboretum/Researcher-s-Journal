@@ -124,7 +124,7 @@ pageEncoding="ISO-8859-1"%>
                 </div>
                 <br><hr>
                 <h4>Upload a new Document</h4>
-                    <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data" >
+                    <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data"  id="js-upload-form">
                     <div class="row">
                     	<div class="col-md-3 "><input type="file" name="fileField" ></div>
                     	<div class="col-md-3 "><input type="submit" class="btn btn-primary" name="submit" value="Submit" ></div>

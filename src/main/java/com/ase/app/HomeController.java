@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ase.bean.Document;
 import com.ase.bean.Group;
+import com.ase.bean.Result_display;
 import com.ase.bean.User;
 import com.ase.dao.DocumentDAO;
 import com.ase.dao.GroupDAO;
+import com.ase.dao.Result_DisplayDAO;
 import com.ase.dao.UserDAO;
 
 /**
@@ -36,6 +38,8 @@ public class HomeController {
 	private UserDAO userDAO = new UserDAO();
 	private GroupDAO groupDAO = new GroupDAO();
 	private DocumentDAO DocDAO = new DocumentDAO();
+	private Result_DisplayDAO displayDAO = new Result_DisplayDAO();
+	
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -47,6 +51,10 @@ public class HomeController {
 		HttpSession session = request.getSession(true);
 		String userName = (String)session.getAttribute("username");
 		if(userName!=null){
+			Date date = new Date();
+			DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+			String localDate = dateFormat.format(date);
+			System.out.println(localDate);
 			User user = userDAO.getUserByName(userName);
 			Group userGroup = groupDAO.getGroupByName(user.getUserGroup());
 			
@@ -56,6 +64,12 @@ public class HomeController {
 			Document doc = new Document();
 			DocDAO.setServletContext(this.servletContext);
 			doc = DocDAO.getDocumentByName("springData2");
+			
+			Result_display display = null;
+			
+			//display = displayDAO.getDisplaybyDateandGroup(localDate, userGroup);
+			
+			//model.addAttribute("display", display);
 			
 			model.addAttribute("doc", doc);
 			

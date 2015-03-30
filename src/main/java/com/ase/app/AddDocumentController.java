@@ -81,6 +81,7 @@ public class AddDocumentController implements ServletContextAware {
             
         }
         
+        
         HttpSession session = request.getSession(true);
 		String userName = (String)session.getAttribute("username");
 		

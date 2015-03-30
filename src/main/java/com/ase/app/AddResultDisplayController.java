@@ -20,7 +20,7 @@ public class AddResultDisplayController {
 	
 	private Result_DisplayDAO displayDAO = new Result_DisplayDAO();
 	
-	@RequestMapping(value = "/AddGroup", method = RequestMethod.POST)
+	@RequestMapping(value = "/addResultDisplay", method = RequestMethod.POST)
 	public void addDisplay(Locale locale, Model model, HttpServletRequest request){
 		Result_display display = new Result_display();
 		Date date = new Date();

@@ -17,7 +17,9 @@ import com.ase.util.FigureIOService;
 
 import java.io.*;
 import java.util.*;
+
 import javax.servlet.ServletContext;
+
 import org.bson.types.Binary;
 
 
@@ -80,6 +82,8 @@ public class DocumentDAO {
 		
 		document.setDocAuthor(doc.get("doc_author").toString());
 		document.setDocDate(doc.get("doc_date").toString());
+		//Date date = (Date) doc.get("doc_date");
+		
 		
 		if(docType.equals("figure")){
 			byte[] c = (byte[])doc.get("doc_file");

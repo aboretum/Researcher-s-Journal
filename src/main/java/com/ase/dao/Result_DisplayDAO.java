@@ -12,6 +12,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.ParallelScanOptions;
 import com.ase.bean.Document;
+import com.ase.bean.Group;
 import com.ase.bean.Result_display;
 
 import java.util.*;
@@ -37,6 +38,27 @@ public class Result_DisplayDAO {
 	public Result_display getDisplaybyDate(Date date){
 		Result_display display = new Result_display();
 		BasicDBObject query = new BasicDBObject("display_date", date);
+		DBCursor cursor = col.find(query);
+		DBObject doc = null;
+		
+		try{
+			while(cursor.hasNext()){
+				doc = cursor.next();
+			}
+		}finally{
+			cursor.close();
+		}
+		
+		display.setDisplayId(doc.get("display_id").toString());
+		display.setCategory(doc.get("display_category").toString());
+		display.setDate(doc.get("display_date").toString());
+		
+		return display;
+	}
+	
+	public Result_display getDisplaybyDateandGroup(String date, Group grp){
+		Result_display display = new Result_display();
+		BasicDBObject query = new BasicDBObject("display_date", date).append("display_group", grp.getGroupName());
 		DBCursor cursor = col.find(query);
 		DBObject doc = null;
 		
