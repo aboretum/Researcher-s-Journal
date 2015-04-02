@@ -67,9 +67,9 @@ public class HomeController {
 			
 			Result_display display = null;
 			
-			//display = displayDAO.getDisplaybyDateandGroup(localDate, userGroup);
+			display = displayDAO.getDisplaybyDateandGroup(localDate, userGroup);
 			
-			//model.addAttribute("display", display);
+			model.addAttribute("display", display);
 			
 			model.addAttribute("doc", doc);
 			

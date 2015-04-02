@@ -38,7 +38,7 @@ public class DocumentDAO {
 		col = dbUtil.getCollection(dbCol);
 	}
 	
-	public void addDocument(Document document){
+	public void addDocument(Document document, Date date){
 		
 		if(document.getDocType().equals("figure")){
 			FigureDocument figure = (FigureDocument)document;
@@ -49,7 +49,7 @@ public class DocumentDAO {
 				append("doc_content",document.getDocContent()).
 				append("doc_url", document.getDocUrl()).
 				append("doc_author", document.getDocAuthor()).
-				append("doc_date", new Date()).
+				append("doc_date", date).
 				append("doc_file", data);
 		
 		col.insert(doc);

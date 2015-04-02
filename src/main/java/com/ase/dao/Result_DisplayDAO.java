@@ -1,7 +1,9 @@
 package com.ase.dao;
 
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.BulkWriteOperation;
 import com.mongodb.BulkWriteResult;
 import com.mongodb.Cursor;
@@ -12,6 +14,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.ParallelScanOptions;
 import com.ase.bean.Document;
+import com.ase.bean.FigureDocument;
 import com.ase.bean.Group;
 import com.ase.bean.Result_display;
 
@@ -33,6 +36,35 @@ public class Result_DisplayDAO {
 				append("display_date", new Date()).
 				append("display_category",result_display.getCategory());
 		col.insert(doc);
+	}
+	
+
+	public void addNewDocumentToGroup(Date date, FigureDocument document, Group userGroup) {
+		Date startDate = getStartOfDay(new Date());
+		Date endDate = getEndOfDay(new Date());
+		
+		BasicDBObject dateQuery = new BasicDBObject();
+		dateQuery.put("display_date", BasicDBObjectBuilder.start("$gte", startDate).add("$lte", endDate).get());
+		dateQuery.put("display_group", userGroup.getGroupName());
+		
+		DBCursor cursor = col.find(dateQuery);
+		DBObject doc = null;
+		
+		try{
+			while(cursor.hasNext()){
+				doc = cursor.next();
+			}
+		}finally{
+			cursor.close();
+		}
+		
+		//Add new document to a specific group's current resulst display.
+		BasicDBObject push = new BasicDBObject();
+		push.put("$push", new BasicDBObject("display_docs",new BasicDBObject("doc_author", document.getDocAuthor()).
+				append("doc_date", date)));
+		col.update(dateQuery, push);
+		
+		
 	}
 	
 	public Result_display getDisplaybyDate(Date date){
@@ -58,21 +90,55 @@ public class Result_DisplayDAO {
 	
 	public Result_display getDisplaybyDateandGroup(String date, Group grp){
 		Result_display display = new Result_display();
-		BasicDBObject query = new BasicDBObject("display_date", date).append("display_group", grp.getGroupName());
-		DBCursor cursor = col.find(query);
-		DBObject doc = null;
+		Date startDate = getStartOfDay(new Date());
+		Date endDate = getEndOfDay(new Date());
 		
+		BasicDBObject dateQuery = new BasicDBObject();
+		dateQuery.put("display_date", BasicDBObjectBuilder.start("$gte", startDate).add("$lte", endDate).get());
+		dateQuery.put("display_group", grp.getGroupName());
+		
+		DBCursor rdCursor = col.find(dateQuery);
+		DBObject doc = null;
 		try{
-			while(cursor.hasNext()){
-				doc = cursor.next();
+			while(rdCursor.hasNext()){
+				doc=rdCursor.next();
 			}
 		}finally{
-			cursor.close();
+			rdCursor.close();
+		}
+		
+		if(doc==null){
+			BasicDBObject rdDoc = new BasicDBObject("display_id", 1).
+					append("display_date", new Date()).
+					append("display_category",grp.getGroupArea()).
+					append("display_group", grp.getGroupName());
+			col.insert(rdDoc);
+		}
+		
+		rdCursor = col.find(dateQuery);
+		try{
+			while(rdCursor.hasNext()){
+				doc=rdCursor.next();
+			}
+		}finally{
+			rdCursor.close();
+		}
+		
+		List<Document> display_docs = new ArrayList<Document>();
+		BasicDBList docList = (BasicDBList) doc.get("display_docs");
+		
+		for(Object obj : docList){
+			DBObject docObj = (DBObject) obj;
+			Document d = new Document();
+			d.setDocDate(docObj.get("doc_date").toString());
+			d.setDocAuthor(docObj.get("doc_author").toString());
+			display_docs.add(d);
 		}
 		
 		display.setDisplayId(doc.get("display_id").toString());
 		display.setCategory(doc.get("display_category").toString());
 		display.setDate(doc.get("display_date").toString());
+		display.setDocs(display_docs);
 		
 		return display;
 	}
@@ -88,4 +154,25 @@ public class Result_DisplayDAO {
 	public void deleteResult_display(String display_id){
 		
 	}
+	
+	public Date getEndOfDay(Date date) {
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(date);
+	    calendar.set(Calendar.HOUR_OF_DAY, 23);
+	    calendar.set(Calendar.MINUTE, 59);
+	    calendar.set(Calendar.SECOND, 59);
+	    calendar.set(Calendar.MILLISECOND, 999);
+	    return calendar.getTime();
+	}
+
+	public Date getStartOfDay(Date date) {
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(date);
+	    calendar.set(Calendar.HOUR_OF_DAY, 0);
+	    calendar.set(Calendar.MINUTE, 0);
+	    calendar.set(Calendar.SECOND, 0);
+	    calendar.set(Calendar.MILLISECOND, 0);
+	    return calendar.getTime();
+	}
+
 }
