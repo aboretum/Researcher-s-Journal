@@ -127,18 +127,22 @@ public class Result_DisplayDAO {
 		List<Document> display_docs = new ArrayList<Document>();
 		BasicDBList docList = (BasicDBList) doc.get("display_docs");
 		
-		for(Object obj : docList){
-			DBObject docObj = (DBObject) obj;
-			Document d = new Document();
-			d.setDocDate(docObj.get("doc_date").toString());
-			d.setDocAuthor(docObj.get("doc_author").toString());
-			display_docs.add(d);
+		if(docList!=null){
+			for(Object obj : docList){
+				DBObject docObj = (DBObject) obj;
+				Document d = new Document();
+				d.setDocDate(docObj.get("doc_date").toString());
+				d.setDocAuthor(docObj.get("doc_author").toString());
+				display_docs.add(d);
+			}
+			
+			display.setDisplayId(doc.get("display_id").toString());
+			display.setCategory(doc.get("display_category").toString());
+			display.setDate(doc.get("display_date").toString());
+			display.setDocs(display_docs);
 		}
 		
-		display.setDisplayId(doc.get("display_id").toString());
-		display.setCategory(doc.get("display_category").toString());
-		display.setDate(doc.get("display_date").toString());
-		display.setDocs(display_docs);
+		
 		
 		return display;
 	}
