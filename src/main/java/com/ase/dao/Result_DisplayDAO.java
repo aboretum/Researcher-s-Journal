@@ -58,7 +58,7 @@ public class Result_DisplayDAO {
 			cursor.close();
 		}
 		
-		//Add new document to a specific group's current resulst display.
+		//Add new document to a specific group's current result display.
 		BasicDBObject push = new BasicDBObject();
 		push.put("$push", new BasicDBObject("display_docs",new BasicDBObject("doc_author", document.getDocAuthor()).
 				append("doc_date", date)));
@@ -131,7 +131,7 @@ public class Result_DisplayDAO {
 			for(Object obj : docList){
 				DBObject docObj = (DBObject) obj;
 				Document d = new Document();
-				d.setDocDate(docObj.get("doc_date").toString());
+				d.setDocDate((Date)docObj.get("doc_date"));
 				d.setDocAuthor(docObj.get("doc_author").toString());
 				display_docs.add(d);
 			}
