@@ -46,7 +46,7 @@ public class AddDocumentController implements ServletContextAware {
 	private Result_DisplayDAO displayDAO = new Result_DisplayDAO();
 
 	@RequestMapping(value = "/AddDocument", method = RequestMethod.POST)
-	public String addDoc(Locale locale, Model model, HttpServletRequest request, 
+	public @ResponseBody String addDoc(Locale locale, Model model, HttpServletRequest request, 
 			@RequestParam(value="fileField")MultipartFile figure)  {
 		
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -100,7 +100,7 @@ public class AddDocumentController implements ServletContextAware {
 			
 			Document doc = new Document();
 			DocDAO.setServletContext(this.servletContext);
-			//doc = DocDAO.getDocumentByName("springData2");
+			doc = DocDAO.getDocumentByName("springData2");
 			
 			model.addAttribute("doc", doc);
 		}

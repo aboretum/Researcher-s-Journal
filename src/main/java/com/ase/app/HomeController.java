@@ -1,9 +1,7 @@
 package com.ase.app;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
@@ -65,17 +63,11 @@ public class HomeController {
 			
 			Document doc = new Document();
 			DocDAO.setServletContext(this.servletContext);
-		
+			doc = DocDAO.getDocumentByName("springData2");
 			
 			Result_display display = null;
 			
 			display = displayDAO.getDisplaybyDateandGroup(localDate, userGroup);
-			List<Document> displayList = new ArrayList<Document>();
-			for(Document document : display.getDocs()){
-				Document newDocument = DocDAO.getDocumentByDateandGroup(document.getDocDate(), userGroup);
-				displayList.add(0, newDocument);
-			}
-			display.setDocs(displayList);
 			
 			model.addAttribute("display", display);
 			

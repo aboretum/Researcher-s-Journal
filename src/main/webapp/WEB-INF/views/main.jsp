@@ -75,6 +75,7 @@ pageEncoding="ISO-8859-1"%>
 </nav>
     <div id="wrapper">
         
+
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
@@ -123,7 +124,7 @@ pageEncoding="ISO-8859-1"%>
                 </div>
                 <br><hr>
                 <h4>Upload a new Document</h4>
-                    <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data" >
+                    <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data"  id="js-upload-form">
                     <div class="row">
                     	<div class="col-md-3 "><input type="file" name="fileField" ></div>
                     	<div class="col-md-3 "><input type="submit" class="btn btn-primary" name="submit" value="Submit" ></div>
@@ -144,9 +145,6 @@ pageEncoding="ISO-8859-1"%>
                 <hr>
                 <h4> Recently Added Documents </h4>
                 <br/>
-                
-              <c:forEach items="${display.docs}" var="document">					
-				
                 <div class="row">
                     <div class="col-lg-10 ">
                         <div class="panel panel-primary">
@@ -154,8 +152,8 @@ pageEncoding="ISO-8859-1"%>
                                 <div class="row">
                                     
                                     <div class="col-xs-9 text-left">
-                                        <div class="huge">Uploaded by ${document.docAuthor} </div>
-                                        <div>Description: ${document.docName}</div>
+                                        <div class="huge">${doc.docAuthor} </div>
+                                        <div>${doc.docName}</div>
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +161,7 @@ pageEncoding="ISO-8859-1"%>
                                 <div class="panel-footer">
       
                                     <span class="pull-left" onclick="javascript:load_content('pnuts');">
-                                    	<img class="thumb-nail" src=".${document.docUrl}" width ="720" height="420" />
+                                    	<img class="thumb-nail" src=".${doc.docUrl}" width ="720" height="420" />
 									</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
@@ -173,8 +171,6 @@ pageEncoding="ISO-8859-1"%>
                     </div>
                     
                 </div>
-             </c:forEach>
-             
             </div>
             <hr>
             <div id = "content_div" hidden=true style="border:1px solid black;height:40%;overflow:auto">

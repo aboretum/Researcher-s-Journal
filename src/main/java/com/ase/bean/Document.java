@@ -7,7 +7,7 @@ public class Document {
 	private String docName;
 	private String docAuthor;
 	private String docContent;
-	private Date docDate;
+	private String docDate;
 	private String docUrl;
 	
 	public void setDocType(String docType){
@@ -50,11 +50,11 @@ public class Document {
 		return docUrl;
 	}
 
-	public Date getDocDate() {
+	public String getDocDate() {
 		return docDate;
 	}
 
-	public void setDocDate(Date docDate) {
+	public void setDocDate(String docDate) {
 		this.docDate = docDate;
 	}
 	

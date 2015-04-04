@@ -69,7 +69,7 @@ public class LoginController {
     			
     		Document doc = new Document();
     		DocDAO.setServletContext(this.servletContext);
-    		//doc = DocDAO.getDocumentByName("springData2");
+    		doc = DocDAO.getDocumentByName("springData2");
     			
     		model.addAttribute("doc", doc);
     			
