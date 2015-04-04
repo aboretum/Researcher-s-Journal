@@ -49,4 +49,20 @@ public class PageController {
 		return "group-overview";
 	}
 	
+	@RequestMapping(value = "/PersonalPage", method = RequestMethod.GET)
+	public String userProfile(Locale locale, Model model, HttpServletRequest request) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		HttpSession session = request.getSession(true);
+		String userName = (String)session.getAttribute("username");
+		
+		User user = userDAO.getUserByName(userName);
+		Group userGroup = groupDAO.getGroupByName(user.getUserGroup());
+		model.addAttribute("userGroup", userGroup);
+		model.addAttribute(userGroup.getUsers());
+		
+		
+		return "personal-page";
+	}
+	
 }

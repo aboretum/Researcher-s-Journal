@@ -13,6 +13,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.ParallelScanOptions;
 import com.ase.bean.Document;
 import com.ase.bean.FigureDocument;
+import com.ase.bean.Group;
 import com.ase.util.FigureIOService;
 
 import java.io.*;
@@ -57,9 +58,9 @@ public class DocumentDAO {
 		
 	}
 	
-	public Document getDocumentByName(String docName){
+	public Document getDocumentByDateandGroup(Date date, Group grp){
 		Document document = new Document();
-		BasicDBObject query = new BasicDBObject("doc_name", docName);
+		BasicDBObject query = new BasicDBObject("doc_date", date);
 		DBCursor cursor = col.find(query);
 		DBObject doc = null;
 		try{
@@ -81,8 +82,7 @@ public class DocumentDAO {
 		document.setDocContent(doc.get("doc_content").toString());
 		
 		document.setDocAuthor(doc.get("doc_author").toString());
-		document.setDocDate(doc.get("doc_date").toString());
-		//Date date = (Date) doc.get("doc_date");
+		document.setDocDate((Date)doc.get("doc_date"));
 		
 		
 		if(docType.equals("figure")){
@@ -96,7 +96,7 @@ public class DocumentDAO {
 			figureDoc.setDocName(doc.get("doc_name").toString());
 			figureDoc.setDocType(doc.get("doc_type").toString());
 			figureDoc.setDocAuthor(doc.get("doc_author").toString());
-			figureDoc.setDocDate(doc.get("doc_date").toString());
+			figureDoc.setDocDate((Date)doc.get("doc_date"));
 			
 			figureDoc.setDocContent(doc.get("doc_content").toString());
 			figureDoc.setImageFile(file);
@@ -135,4 +135,5 @@ public class DocumentDAO {
 	public void setServletContext(ServletContext context){
 		this.servletContext = context;
 	}
+
 }
