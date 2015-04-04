@@ -9,6 +9,7 @@ public class Document {
 	private String docContent;
 	private Date docDate;
 	private String docUrl;
+	private boolean docPrivate;
 	
 	public void setDocType(String docType){
 		this.docType = docType;
@@ -56,6 +57,14 @@ public class Document {
 
 	public void setDocDate(Date docDate) {
 		this.docDate = docDate;
+	}
+
+	public boolean isDocPrivate() {
+		return docPrivate;
+	}
+
+	public void setDocPrivate(boolean docPrivate) {
+		this.docPrivate = docPrivate;
 	}
 	
 }

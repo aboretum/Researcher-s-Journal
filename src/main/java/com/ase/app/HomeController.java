@@ -71,14 +71,16 @@ public class HomeController {
 			
 			display = displayDAO.getDisplaybyDateandGroup(localDate, userGroup);
 			List<Document> displayList = new ArrayList<Document>();
-			for(Document document : display.getDocs()){
-				Document newDocument = DocDAO.getDocumentByDateandGroup(document.getDocDate(), userGroup);
-				displayList.add(0, newDocument);
+			
+			if(display.getDocs()!=null){
+				for(Document document : display.getDocs()){
+					Document newDocument = DocDAO.getDocumentByDateandGroup(document.getDocDate(), userGroup);
+					displayList.add(0, newDocument);
+				}
+				display.setDocs(displayList);
 			}
-			display.setDocs(displayList);
 			
 			model.addAttribute("display", display);
-			
 			model.addAttribute("doc", doc);
 			
 			System.out.println(doc.getDocUrl());

@@ -9,6 +9,7 @@ pageEncoding="ISO-8859-1"%>
 <head>
 
 <script src="./resources/js/main.js"></script>
+
     <script>
     function startTime() {
         var today=new Date();
@@ -37,13 +38,14 @@ pageEncoding="ISO-8859-1"%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-    <title>Group information</title>
+    <title>The personal profile</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="./resources/css/simple-sidebar.css" rel="stylesheet">
+    <link href="./resources/css/layout.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -62,9 +64,10 @@ pageEncoding="ISO-8859-1"%>
     <div>
       <ul class="nav navbar-nav">
         <li><a href="/app/">Main Page</a></li>
-        <li class="active"><a href="GroupInfo">Group Information</a></li>
-        <li><a href="PersonalPage">Personal Profile</a></li>
+        <li><a href="GroupInfo">Group Information</a></li>
+         <li class="active"><a href="PersonalPage">Personal Profile</a></li>
         <li><a href="about.html">About</a></li>
+       
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="Logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
@@ -74,7 +77,6 @@ pageEncoding="ISO-8859-1"%>
 </nav>
     <div id="wrapper">
         
-
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
@@ -107,32 +109,46 @@ pageEncoding="ISO-8859-1"%>
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div align="right" id="time" style="font-size:15px"></div><br><hr>
-                <h4>Welcome to group: ${userGroup.groupName}</h4>
-                <br>
                 <div class = "row" style="font-size:15px">
-                	<table class="table table-hover">
-                		<thead>
-                		<tr>
-                		<th>User Name</th>
-						<th>Member Title</th>
-						<th>User Group</th>
-						</tr>
-						</thead>
-                		<c:forEach items="${userList}" var="user">					
-						<tr>
-						<td>${user.userName}</td>
-						<td>${user.member_title}</td>
-						<td>${user.userGroup}</td>
-						</tr>
-						</c:forEach>
-                	</table>
-                   
+                	<div class="col-lg-3 col-md-6">
+                        User: ${user.userName}
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        Title: ${user.member_title}
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        Member of: ${user.userGroup} 
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        Area of research: ${userGroup.groupArea} 
+                    </div>
                 </div>
-                <br>
+                <br><hr>
+                <h4>Upload a new Document</h4>
+                    <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data" >
+                    <div class="row">
+                    	<div class="col-md-3 "><input type="file" name="fileField" ></div>
+                    	<div class="col-md-3 "><input type="submit" class="btn btn-primary" name="submit" value="Submit" ></div>
+                    </div>
+                        
+                        
+                    </form> 
                     
+                <h4>Or drag and drop files below</h4>
+                 <div class="row">
+                 	<div class="col-lg-10">
+                 		<div class="upload-drop-zone" id="drop-zone">
+            			Just drag and drop files here
+          				</div>
+                 	</div>
+                 </div>
+          			
                 <hr>
                 <h4> Recently Added Documents </h4>
                 <br/>
+                
+              <c:forEach items="${display.docs}" var="document">					
+				
                 <div class="row">
                     <div class="col-lg-10 ">
                         <div class="panel panel-primary">
@@ -140,16 +156,22 @@ pageEncoding="ISO-8859-1"%>
                                 <div class="row">
                                     
                                     <div class="col-xs-9 text-left">
-                                        <div class="huge">${doc.docAuthor} </div>
-                                        <div>${doc.docName}</div>
+                                        <div class="huge">Uploaded by ${document.docAuthor}</div>
+                                        <div>Description: ${document.docName}</div>
                                     </div>
+                                    
+                                     <div class="col-xs-3 text-right">
+                                        <div class="huge"><span class="pull-right clickable"><i class="glyphicon glyphicon-cog"></i>Privacy</span>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <a href="#">
                                 <div class="panel-footer">
       
                                     <span class="pull-left" onclick="javascript:load_content('pnuts');">
-                                    	<img class="thumb-nail" src=".${doc.docUrl}" width ="900" height="600" />
+                                    	<img class="thumb-nail" src=".${document.docUrl}" width ="720" height="420" />
 									</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
@@ -159,6 +181,9 @@ pageEncoding="ISO-8859-1"%>
                     </div>
                     
                 </div>
+                <br><br>
+             </c:forEach>
+             
             </div>
             <hr>
             <div id = "content_div" hidden=true style="border:1px solid black;height:40%;overflow:auto">
@@ -285,6 +310,6 @@ pageEncoding="ISO-8859-1"%>
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-	
+	<script src="./resources/js/dragdrop.js"></script>
 </body>
 </html>

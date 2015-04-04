@@ -65,7 +65,9 @@ pageEncoding="ISO-8859-1"%>
       <ul class="nav navbar-nav">
         <li class="active"><a href="/app/">Main Page</a></li>
         <li><a href="GroupInfo">Group Information</a></li>
+        <li><a href="PersonalPage">Personal Profile</a></li>
         <li><a href="about.html">About</a></li>
+        
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="Logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
@@ -173,6 +175,7 @@ pageEncoding="ISO-8859-1"%>
                     </div>
                     
                 </div>
+                <br><br>
              </c:forEach>
              
             </div>

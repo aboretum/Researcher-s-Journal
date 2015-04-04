@@ -17,6 +17,7 @@ import com.ase.bean.Document;
 import com.ase.bean.FigureDocument;
 import com.ase.bean.Group;
 import com.ase.bean.Result_display;
+import com.ase.bean.User;
 
 import java.util.*;
 
@@ -63,13 +64,12 @@ public class Result_DisplayDAO {
 		push.put("$push", new BasicDBObject("display_docs",new BasicDBObject("doc_author", document.getDocAuthor()).
 				append("doc_date", date)));
 		col.update(dateQuery, push);
-		
-		
+			
 	}
 	
-	public Result_display getDisplaybyDate(Date date){
-		Result_display display = new Result_display();
-		BasicDBObject query = new BasicDBObject("display_date", date);
+	public void addNewDocumentToUser(Date date, FigureDocument document, User user){
+		BasicDBObject query = new BasicDBObject("display_user", user.getUserName());
+		
 		DBCursor cursor = col.find(query);
 		DBObject doc = null;
 		
@@ -81,9 +81,64 @@ public class Result_DisplayDAO {
 			cursor.close();
 		}
 		
-		display.setDisplayId(doc.get("display_id").toString());
-		display.setCategory(doc.get("display_category").toString());
-		display.setDate(doc.get("display_date").toString());
+		BasicDBObject push = new BasicDBObject();
+		push.put("$push", new BasicDBObject("display_docs",new BasicDBObject("doc_author", document.getDocAuthor()).
+				append("doc_date", date)));
+		col.update(query, push);
+		
+	}
+	
+	public Result_display getDisplaybyUser(User user){
+		Result_display display = new Result_display();
+		BasicDBObject query = new BasicDBObject("display_user", user.getUserName());
+		DBCursor cursor = col.find(query);
+		DBObject doc = null;
+		
+		try{
+			while(cursor.hasNext()){
+				doc = cursor.next();
+			}
+		}finally{
+			cursor.close();
+		}
+		
+		if(doc==null){
+			BasicDBObject rdDoc = new BasicDBObject("display_id", 1).
+					append("display_category", "userPersonal").
+					append("display_group", user.getUserGroup()).
+					append("display_user", user.getUserName());
+			col.insert(rdDoc);
+			
+		}
+		
+		cursor = col.find(query);
+		
+		try{
+			while(cursor.hasNext()){
+				doc = cursor.next();
+			}
+		}finally{
+			cursor.close();
+		}
+		
+		
+		List<Document> display_docs = new ArrayList<Document>();
+		BasicDBList docList = (BasicDBList) doc.get("display_docs");
+		
+		if(docList!=null){
+			for(Object obj : docList){
+				DBObject docObj = (DBObject) obj;
+				Document d = new Document();
+				d.setDocDate((Date)docObj.get("doc_date"));
+				d.setDocAuthor(docObj.get("doc_author").toString());
+				display_docs.add(d);
+			}
+			
+			display.setDisplayId(doc.get("display_id").toString());
+			display.setCategory(doc.get("display_category").toString());
+			display.setDisplay_group(doc.get("display_group").toString());
+			display.setDocs(display_docs);
+		}
 		
 		return display;
 	}

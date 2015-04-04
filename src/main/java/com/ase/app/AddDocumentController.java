@@ -72,7 +72,7 @@ public class AddDocumentController implements ServletContextAware {
             	String fileName = "/resources/images/testFigure.jpg";
             	
             	FigureDocument doc = new FigureDocument();
-            	doc.setDocAuthor("Hawlking");
+            	doc.setDocAuthor(user.getUserName());
             	doc.setDocContent("nocontent");
             	doc.setDocName("springData2");
             	doc.setDocType("figure");
@@ -91,7 +91,7 @@ public class AddDocumentController implements ServletContextAware {
                 doc.setImageFile(image);
                 DocDAO.addDocument(doc, date);
                 displayDAO.addNewDocumentToGroup(date, doc, userGroup);
-                
+                displayDAO.addNewDocumentToUser(date, doc, user);
             }	
             
 			
