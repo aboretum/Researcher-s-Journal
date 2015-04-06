@@ -125,14 +125,27 @@ pageEncoding="ISO-8859-1"%>
                 </div>
                 <br><hr>
                 <h4>Upload a new Document</h4>
-                    <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data" >
+                    
                     <div class="row">
-                    	<div class="col-md-3 "><input type="file" name="fileField" ></div>
-                    	<div class="col-md-3 "><input type="submit" class="btn btn-primary" name="submit" value="Submit" ></div>
+                    	<div class = "col-md-10">
+                   		  <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data" >
+                   		  	<div class = "row">
+                    			<div class = "col-md-3"><input type="file" name="fileField" ></div>
+                    			<div class = "col-md-1"><input type="submit" class="btn btn-primary" name="submit" value="Submit" ></div>
+                    			<div class = "col-md-8" style="font-size:15px">
+                    				<div>Give your document some description:</div>
+                    				<div><textarea class="form-control" name="docDescription" placeholder="What kind of data this is?" rows="2"></textarea></div>
+                    			</div>
+                    		</div>
+                    		<br>
+                    		<div class = "row" style="font-size:15px">
+                   				
+                    		</div>
+                    	  </form> 
+                    	 </div>
                     </div>
                         
-                        
-                    </form> 
+                  
                     
                 <h4>Or drag and drop files below</h4>
                  <div class="row">

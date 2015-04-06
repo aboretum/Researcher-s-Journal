@@ -144,7 +144,7 @@ pageEncoding="ISO-8859-1"%>
                  </div>
           			
                 <hr>
-                <h4> Recently Added Documents </h4>
+                <h4> Your personal documents </h4>
                 <br/>
                 
               <c:forEach items="${display.docs}" var="document">					
