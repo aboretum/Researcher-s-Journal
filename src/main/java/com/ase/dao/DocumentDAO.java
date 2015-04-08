@@ -51,7 +51,8 @@ public class DocumentDAO {
 				append("doc_url", document.getDocUrl()).
 				append("doc_author", document.getDocAuthor()).
 				append("doc_date", date).
-				append("doc_file", data);
+				append("doc_file", data).
+				append("doc_id", document.getDocID()).append("doc_private", false);
 		
 		col.insert(doc);
 		}
@@ -80,9 +81,10 @@ public class DocumentDAO {
 		document.setDocName(doc.get("doc_name").toString());
 		document.setDocType(doc.get("doc_type").toString());
 		document.setDocContent(doc.get("doc_content").toString());
-		
+		document.setDocID(doc.get("doc_id").toString());
 		document.setDocAuthor(doc.get("doc_author").toString());
 		document.setDocDate((Date)doc.get("doc_date"));
+		document.setDocPrivate((Boolean)doc.get("doc_private"));
 		
 		
 		if(docType.equals("figure")){
@@ -97,8 +99,10 @@ public class DocumentDAO {
 			figureDoc.setDocType(doc.get("doc_type").toString());
 			figureDoc.setDocAuthor(doc.get("doc_author").toString());
 			figureDoc.setDocDate((Date)doc.get("doc_date"));
+			figureDoc.setDocPrivate((Boolean)doc.get("doc_private"));
 			
 			figureDoc.setDocContent(doc.get("doc_content").toString());
+			figureDoc.setDocID(doc.get("doc_id").toString());
 			figureDoc.setImageFile(file);
 			figureDoc.setDocUrl(fileName);
 			document = (Document)figureDoc;
@@ -134,6 +138,26 @@ public class DocumentDAO {
 	
 	public void setServletContext(ServletContext context){
 		this.servletContext = context;
+	}
+
+	public void toggleDocPrivacy(String docID) {
+		BasicDBObject query = new BasicDBObject("doc_id", docID);
+		DBCursor cursor = col.find(query);
+		DBObject doc = null;
+		try{
+			while(cursor.hasNext()){
+				doc = cursor.next();
+			}
+		}finally{
+			cursor.close();
+		}
+		
+		Boolean doc_privacy = (Boolean)doc.get("doc_private");
+		
+		BasicDBObject updateQuery = new BasicDBObject();
+		updateQuery.put("$set", 
+			new BasicDBObject().append("doc_private", !doc_privacy));
+		col.update(query, updateQuery);
 	}
 
 }

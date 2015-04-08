@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ import com.ase.dao.DocumentDAO;
 import com.ase.dao.GroupDAO;
 import com.ase.dao.Result_DisplayDAO;
 import com.ase.dao.UserDAO;
+import com.ase.util.DocumentPrivacyService;
 
 import java.io.*;
 
@@ -69,13 +71,16 @@ public class AddDocumentController implements ServletContextAware {
         	if(docType.equals("figure")){
             	
             	String fileName = "/resources/images/testFigure.jpg";
-            	
+            	String doc_id = user.getUserName()+DocumentPrivacyService.generateUniqueDocID();
             	FigureDocument doc = new FigureDocument();
             	doc.setDocAuthor(user.getUserName());
             	doc.setDocContent("nocontent");
             	doc.setDocName(docDes);
             	doc.setDocType("figure");
             	doc.setDocUrl("foo.com");
+            	doc.setDocID(doc_id);
+            	
+            	
             	
             	File image = null;
             	try{

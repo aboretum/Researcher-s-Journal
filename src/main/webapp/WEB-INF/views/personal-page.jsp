@@ -4,7 +4,7 @@
 pageEncoding="ISO-8859-1"%>
 <%@ page session="false" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -36,7 +36,7 @@ pageEncoding="ISO-8859-1"%>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+   
 
     <title>The personal profile</title>
 
@@ -161,8 +161,16 @@ pageEncoding="ISO-8859-1"%>
                                     </div>
                                     
                                      <div class="col-xs-3 text-right">
-                                        <div class="huge"><span class="pull-right clickable"><i class="glyphicon glyphicon-cog"></i>Privacy</span>
-                                        </div>
+                                     	<div class="btn-group">
+  												<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+   													 <span class="glyphicon glyphicon-cog"></span>  Private:${document.docPrivate}
+  												</button>
+  													<ul class="dropdown-menu" role="menu">
+    													<li><a href="ToggleDocPrivacy?username=${user.userName}&doc_url=${document.docUrl}&doc_id=${document.docID}&doc_original_privacy=${document.docPrivate}&doc_privacy=true">Make Private</a></li>
+    													<li><a href="ToggleDocPrivacy?username=${user.userName}&doc_url=${document.docUrl}&doc_id=${document.docID}&doc_original_privacy=${document.docPrivate}&doc_privacy=false">Make Public</a></li>
+  													</ul>
+										</div>
+                                        
                                     </div>
                                     
                                 </div>

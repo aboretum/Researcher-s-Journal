@@ -93,4 +93,45 @@ public class PageController {
 		return "personal-page";
 	}
 	
+	@RequestMapping(value = "/ToggleDocPrivacy", method = RequestMethod.GET)
+	public String userDocPrivacy(Locale locale, Model model, HttpServletRequest request) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		HttpSession session = request.getSession(true);
+		String userName = (String)session.getAttribute("username");
+		String doc_original_privacy = request.getParameter("doc_original_privacy");
+		String doc_private = request.getParameter("doc_privacy");
+	
+		String docID = request.getParameter("doc_id");
+		System.out.println(doc_original_privacy);
+		System.out.println(doc_private);
+		
+		if(!doc_original_privacy.equals(doc_private)){
+			DocDAO.toggleDocPrivacy(docID);
+		}
+		
+		User user = userDAO.getUserByName(userName);
+		Group userGroup = groupDAO.getGroupByName(user.getUserGroup());
+		
+		DocDAO.setServletContext(this.servletContext);
+		
+		Result_display display = null;
+		display = displayDAO.getDisplaybyUser(user);
+		List<Document> displayList = new ArrayList<Document>();
+		
+		if(display.getDocs()!=null){
+			for(Document document : display.getDocs()){
+				Document newDocument = DocDAO.getDocumentByDateandGroup(document.getDocDate(), userGroup);
+				displayList.add(0, newDocument);
+			}
+			display.setDocs(displayList);
+		}
+		
+		model.addAttribute("user", user);
+		model.addAttribute("userGroup", userGroup);
+		model.addAttribute("display", display);
+		
+		return "personal-page";
+	}
+	
 }

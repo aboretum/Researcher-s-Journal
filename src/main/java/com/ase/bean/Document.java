@@ -5,6 +5,7 @@ import java.util.*;
 public class Document {
 	private String docType;
 	private String docName;
+	private String docID;
 	private String docAuthor;
 	private String docContent;
 	private Date docDate;
@@ -65,6 +66,14 @@ public class Document {
 
 	public void setDocPrivate(boolean docPrivate) {
 		this.docPrivate = docPrivate;
+	}
+
+	public String getDocID() {
+		return docID;
+	}
+
+	public void setDocID(String docID) {
+		this.docID = docID;
 	}
 	
 }

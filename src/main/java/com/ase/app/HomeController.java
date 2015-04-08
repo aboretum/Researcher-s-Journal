@@ -75,7 +75,9 @@ public class HomeController {
 			if(display.getDocs()!=null){
 				for(Document document : display.getDocs()){
 					Document newDocument = DocDAO.getDocumentByDateandGroup(document.getDocDate(), userGroup);
+					if(!newDocument.isDocPrivate()){
 					displayList.add(0, newDocument);
+					}
 				}
 				display.setDocs(displayList);
 			}
