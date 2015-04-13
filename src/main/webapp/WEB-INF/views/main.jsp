@@ -21,7 +21,6 @@ pageEncoding="ISO-8859-1"%>
         document.getElementById('time').innerHTML = "Last Updated at: " + h+":"+m+":"+s;
         //var t = setTimeout(function(){startTime()},500);
     }
-
     function checkTime(i) {
         if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
         return i;
@@ -106,21 +105,33 @@ pageEncoding="ISO-8859-1"%>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
-        <div id="page-content-wrapper">
+         <div id="page-content-wrapper">
             <div class="container-fluid">
-                <div align="right" id="time" style="font-size:15px"></div><br><hr>
-                <div class = "row" style="font-size:15px">
-                	<div class="col-lg-3 col-md-6">
-                        User: ${user.userName}
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        Title: ${user.member_title}
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        Member of: ${user.userGroup} 
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        Area of research: ${userGroup.groupArea} 
+                <h4> User Details </h4>
+                <br/>
+                <div class="alert alert-info" role="alert">
+                    <div class = "row" style="font-size:15px">
+
+                    	<div class="col-lg-3 col-md-6">
+                            <strong>User: </strong> ${user.userName}
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="col-lg-3 col-md-6">
+                            <strong>Title: </strong> ${user.member_title}
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="col-lg-3 col-md-6">
+                            <strong>Member of: </strong> ${user.userGroup} 
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="col-lg-3 col-md-6">
+                            <strong>Area of research: </strong> ${userGroup.groupArea} 
+                        </div>
+                        <br/>
+                        <br/>
                     </div>
                 </div>
                 <br><hr>
