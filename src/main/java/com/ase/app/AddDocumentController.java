@@ -1,12 +1,16 @@
 package com.ase.app;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+
 
 
 
@@ -26,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ase.bean.Document;
 import com.ase.bean.FigureDocument;
 import com.ase.bean.Group;
+import com.ase.bean.Result_display;
 import com.ase.bean.User;
 import com.ase.dao.DocumentDAO;
 import com.ase.dao.GroupDAO;
@@ -56,6 +61,7 @@ public class AddDocumentController implements ServletContextAware {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		String localDate = dateFormat.format(date);
 		
         String docType = "figure";
  
@@ -67,6 +73,8 @@ public class AddDocumentController implements ServletContextAware {
         	User user = userDAO.getUserByName(userName);
 			Group userGroup = groupDAO.getGroupByName(user.getUserGroup());
 			
+			
+			DocDAO.setServletContext(this.servletContext);
         	
         	if(docType.equals("figure")){
             	
@@ -96,17 +104,27 @@ public class AddDocumentController implements ServletContextAware {
                 DocDAO.addDocument(doc, date);
                 displayDAO.addNewDocumentToGroup(date, doc, userGroup);
                 displayDAO.addNewDocumentToUser(date, doc, user);
+                model.addAttribute("doc", doc);
             }	
             
+        	Result_display display = null;
 			
+			display = displayDAO.getDisplaybyDateandGroup(localDate, userGroup);
+			List<Document> displayList = new ArrayList<Document>();
+			
+			if(display.getDocs()!=null){
+				for(Document document : display.getDocs()){
+					Document newDocument = DocDAO.getDocumentByDateandGroup(document.getDocDate(), userGroup);
+					if(!newDocument.isDocPrivate()){
+					displayList.add(0, newDocument);
+					}
+				}
+				display.setDocs(displayList);
+			}
+			
+			model.addAttribute("display", display);
 			model.addAttribute("user", user);
 			model.addAttribute("userGroup", userGroup);
-			
-			Document doc = new Document();
-			DocDAO.setServletContext(this.servletContext);
-			//doc = DocDAO.getDocumentByName("springData2");
-			
-			model.addAttribute("doc", doc);
 		}
         
 		return "index";

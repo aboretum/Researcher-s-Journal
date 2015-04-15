@@ -88,8 +88,6 @@ public class HomeController {
 			System.out.println(doc.getDocUrl());
 		}
 		
-		
-		
 		return "index";
 	}
 	

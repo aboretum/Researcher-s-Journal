@@ -1,21 +1,14 @@
-@CHARSET "UTF-8";
-
-/* layout.css Style */
-.upload-drop-zone {
-  height: 200px;
-  border-width: 2px;
-  margin-bottom: 20px;
-}
 
 /* skin.css Style*/
-.upload-drop-zone {
+#upload-drop-zone {
   color: #ccc;
   border-style: dashed;
   border-color: #ccc;
   line-height: 200px;
-  text-align: center
+  text-align: center;
+  font-weight: bold;
 }
-.upload-drop-zone.drop {
+#upload-drop-zone.in{
   color: #222;
   border-color: #222;
 }

@@ -4,11 +4,9 @@
 pageEncoding="ISO-8859-1"%>
 <%@ page session="false" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-
-<script src="./resources/js/main.js"></script>
 
     <script>
     function startTime() {
@@ -32,19 +30,19 @@ pageEncoding="ISO-8859-1"%>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+ 
+  
 
     <title>The main page</title>
+    
 
+	
     <!-- Bootstrap Core CSS -->
     <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="./resources/css/simple-sidebar.css" rel="stylesheet">
+    <link href="./resources/css/sb-admin.css" rel="stylesheet">
     <link href="./resources/css/layout.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -56,7 +54,12 @@ pageEncoding="ISO-8859-1"%>
 
 </head>
 <body onload="startTime();">
-	<nav class="navbar navbar-inverse">
+
+
+          			
+<div id="wrapper">
+      	
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" style="font-size:24px" href="#">Researcher's Journal</a>
@@ -66,47 +69,40 @@ pageEncoding="ISO-8859-1"%>
         <li class="active"><a href="/app/">Main Page</a></li>
         <li><a href="GroupInfo">Group Information</a></li>
         <li><a href="PersonalPage">Personal Profile</a></li>
-        <li><a href="about.html">About</a></li>
-        
+        <li><a href="about.html">About</a></li>  
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="Logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
       </ul>
     </div>
   </div>
-</nav>
-    <div id="wrapper">
-        
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        Upload Documents
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:load_content('java_compiler');">Textual Findings</a>
-                </li>
-                <li>
-                    <a href="javascript:load_content('rails');">Result Figure Upload</a>
-                </li>
-                <li>
-                    <a href="javascript:load_content('hadoop');">Single File Upload</a>
-                </li>
-                <li>
-                    <a href="javascript:load_content('hive');">Research Video Upload</a>
-                </li>
-                <li>
-                    <a href="javascript:load_content('scala');">Your Profile</a>
-                </li>
-               
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
 
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li >
+                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Textual Findings</a>
+                    </li>
+                    <li>
+                        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Result Figure Upload</a>
+                    </li>
+                    <li>
+                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Single File Upload</a>
+                    </li>
+                    <li>
+                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Research Video Upload</a>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+            
+    	</div>
+       </nav>
+   
         <!-- Page Content -->
-        <div id="page-content-wrapper">
+        <div id="page-wrapper">
+       		
             <div class="container-fluid">
                 <div align="right" id="time" style="font-size:15px"></div><br><hr>
                 <div class = "row" style="font-size:15px">
@@ -131,8 +127,8 @@ pageEncoding="ISO-8859-1"%>
                    		  <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data" >
                    		  	<div class = "row">
                     			<div class = "col-md-3"><input type="file" name="fileField" ></div>
-                    			<div class = "col-md-1"><input type="submit" class="btn btn-primary" name="submit" value="Submit" ></div>
-                    			<div class = "col-md-8" style="font-size:15px">
+                    			<div class = "col-md-2"><input type="submit" class="btn btn-primary" name="submit" value="Submit" ></div>
+                    			<div class = "col-md-7" style="font-size:15px">
                     				<div>Give your document some description:</div>
                     				<div><textarea class="form-control" name="docDescription" placeholder="What kind of data this is?" rows="2"></textarea></div>
                     			</div>
@@ -145,14 +141,18 @@ pageEncoding="ISO-8859-1"%>
                     	 </div>
                     </div>
                         
-                  
+              
                     
                 <h4>Or drag and drop files below</h4>
                  <div class="row">
-                 	<div class="col-lg-10">
-                 		<div class="upload-drop-zone" id="drop-zone">
-            			Just drag and drop files here
-          				</div>
+                 	
+                 	<div class="col-lg-10" >
+                 		 <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data" >
+                 			
+                 		    <div id ="upload-drop-zone" >
+           						Just drag and drop files here
+    						</div>
+    						</form> 
                  	</div>
                  </div>
           			
@@ -169,7 +169,7 @@ pageEncoding="ISO-8859-1"%>
                                 <div class="row">
                                     
                                     <div class="col-xs-9 text-left">
-                                        <div class="huge">Uploaded by ${document.docAuthor} </div>
+                                        <div >Uploaded by ${document.docAuthor} </div>
                                         <div>Description: ${document.docName}</div>
                                     </div>
                                 </div>
@@ -197,6 +197,7 @@ pageEncoding="ISO-8859-1"%>
                 <p id="page_content"> 
 
                 </p>
+            </div>
         <div style = " height:30%; overflow:auto">
                     <p id= "java" hidden=true>
                     Being a Java programmer and Software developer, I have learned a lot from articles titled as What Every Programmer Should Know about 鈥?. , they tend to give a lot of useful and in-depth information about a particular topic, which otherwise is very hard to discover. In my quest of learning I have come across some very useful articles, which I have bookmarked for reference and multiple reading. I personally think that all programmer can benefit by reading these articles, which makes me write this post and share all of these 鈥淲hat Every Programmer Should Know鈥?articles with you guys. These are from my personal bookmarks. In this article, you will see classic what every programmer should know article from topics like memory, Unicode, floating point arithmetic,networking, object oriented design, time, URL Encoding, String and many more. This list is very important for beginner and newcomers, as they are the ones, who lacks practical knowledge. Since most of these post are actually driven by practical knowledge, beginner and intermediate programmers can take a lot from it. Also gaining knowledge of fundamentals early in career helps to avoid mistakes, which has done by other programmers and software developers on their course of learning. Though it鈥檚 not easy to grasp all knowledge given in these articles in just one reading. You probably won鈥檛 understand some details about floating point number or get confused with subtle details of memory, but it鈥檚 important to keep these list handy and refer them time to time with a context. So Good luck and Enjoy reading these wonderful articles.  By the way, don鈥檛 forget to share any What Every Programmer Should know article, if it鈥檚 not already in this list.
@@ -298,18 +299,29 @@ pageEncoding="ISO-8859-1"%>
                 </p>
         </div> <!-- div for p -->
     </div>
-    <!-- /#page-content-wrapper -->
+    <!-- /#page-wrapper -->
 
     
     </div>
     <!-- /#wrapper -->
-
+	
+	
+    
+	
+	
     <!-- jQuery -->
     <script src="./resources/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="./resources/js/bootstrap.min.js"></script>
-
+	
+	
+	<script src="./resources/js/vendor/jquery.ui.widget.js"></script>
+	<script src="./resources/js/jquery.iframe-transport.js"></script>
+	<script src="./resources/js/jquery.fileupload.js"></script>
+	
+	<script src="./resources/js/myuploadfunction.js"></script>
+	
     <!-- Menu Toggle Script -->
     <script>
     $("#menu-toggle").click(function(e) {
@@ -317,6 +329,5 @@ pageEncoding="ISO-8859-1"%>
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-	<script src="./resources/js/dragdrop.js"></script>
 </body>
 </html>

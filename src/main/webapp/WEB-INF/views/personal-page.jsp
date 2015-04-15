@@ -34,7 +34,7 @@ pageEncoding="ISO-8859-1"%>
     <meta name="author" content="">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
    
 
@@ -44,7 +44,7 @@ pageEncoding="ISO-8859-1"%>
     <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="./resources/css/simple-sidebar.css" rel="stylesheet">
+    <link href="./resources/css/sb-admin.css" rel="stylesheet">
     <link href="./resources/css/layout.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -56,7 +56,9 @@ pageEncoding="ISO-8859-1"%>
 
 </head>
 <body onload="startTime();">
-	<nav class="navbar navbar-inverse">
+<div id="wrapper">
+
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" style="font-size:24px" href="#">Researcher's Journal</a>
@@ -74,39 +76,36 @@ pageEncoding="ISO-8859-1"%>
       </ul>
     </div>
   </div>
+  
+  
+  	 <div class="container-fluid">
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li >
+                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Textual Findings</a>
+                    </li>
+                    <li>
+                        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Result Figure Upload</a>
+                    </li>
+                    <li>
+                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Single File Upload</a>
+                    </li>
+                    <li>
+                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Research Video Upload</a>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+            
+    	</div>
 </nav>
-    <div id="wrapper">
+    
         
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        Upload Documents
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:load_content('java_compiler');">Textual Findings</a>
-                </li>
-                <li>
-                    <a href="javascript:load_content('rails');">Result Figure Upload</a>
-                </li>
-                <li>
-                    <a href="javascript:load_content('hadoop');">Single File Upload</a>
-                </li>
-                <li>
-                    <a href="javascript:load_content('hive');">Research Video Upload</a>
-                </li>
-                <li>
-                    <a href="javascript:load_content('scala');">Your Profile</a>
-                </li>
-               
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
+        
 
         <!-- Page Content -->
-        <div id="page-content-wrapper">
+        <div id="page-wrapper">
             <div class="container-fluid">
                 <div align="right" id="time" style="font-size:15px"></div><br><hr>
                 <div class = "row" style="font-size:15px">
@@ -156,7 +155,7 @@ pageEncoding="ISO-8859-1"%>
                                 <div class="row">
                                     
                                     <div class="col-xs-9 text-left">
-                                        <div class="huge">Uploaded by ${document.docAuthor}</div>
+                                        <div>Uploaded by ${document.docAuthor}</div>
                                         <div>Description: ${document.docName}</div>
                                     </div>
                                     
@@ -299,9 +298,10 @@ pageEncoding="ISO-8859-1"%>
                 </p>
         </div> <!-- div for p -->
     </div>
-    <!-- /#page-content-wrapper -->
+    <!-- /#page-wrapper -->
 
     
+    </div>
     </div>
     <!-- /#wrapper -->
 
