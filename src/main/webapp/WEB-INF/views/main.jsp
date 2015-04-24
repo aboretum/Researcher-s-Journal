@@ -31,7 +31,6 @@ pageEncoding="ISO-8859-1"%>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
  
   
 
@@ -41,11 +40,14 @@ pageEncoding="ISO-8859-1"%>
 	
     <!-- Bootstrap Core CSS -->
     <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
-
+	<!-- Bootstrap Date Time Picker CSS -->
+	<link href="./resources/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
+	 
     <!-- Custom CSS -->
     <link href="./resources/css/sb-admin.css" rel="stylesheet">
     <link href="./resources/css/layout.css" rel="stylesheet">
-
+	
+        
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -141,9 +143,29 @@ pageEncoding="ISO-8859-1"%>
                     	  </form> 
                     	 </div>
                     </div>
-                        
-              
                     
+                   
+    				<div class="row">
+    					<form method="post" action="SearchDisplay" name="submit">
+        				<div class='col-md-3'>
+        			
+            			<div class="form-group">
+                			<div class='input-group date' data-date="" data-date-format="mm/dd/yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd" id="form_date">
+                    		<input type='text' name="search_date" class="form-control" placeholder="Pick a date to retrieve"/>
+                    		<span class="input-group-addon">
+                        		<span class="glyphicon glyphicon-calendar"></span>
+                   			 </span>
+                   			 
+                			</div>
+            			</div>
+         
+        				</div>
+        				<div class='col-md-6'>
+        				<input type="submit" class="btn btn-primary" name="submit" value="Search" >
+        				</div>
+        				</form>
+    				</div>
+				
                 <h4>Or drag and drop files below</h4>
                  <div class="row">
                  	
@@ -309,17 +331,30 @@ pageEncoding="ISO-8859-1"%>
 	
     
 	
-	
-    <!-- jQuery -->
-    <script src="./resources/js/jquery.js"></script>
+	<script type="text/javascript" src="./resources/js/jquery-1.8.3.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="./resources/js/bootstrap.min.js"></script>
+	 <!-- Bootstrap Date Time Picker JavaScript -->
+	<script type="text/javascript" src="./resources/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="./resources/js/locales/bootstrap-datetimepicker.ar.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+	$('#form_date').datetimepicker({
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+</script>
 	
 	
 	<script src="./resources/js/vendor/jquery.ui.widget.js"></script>
 	<script src="./resources/js/jquery.iframe-transport.js"></script>
 	<script src="./resources/js/jquery.fileupload.js"></script>
+	
 	
 	<script src="./resources/js/myuploadfunction.js"></script>
 	
