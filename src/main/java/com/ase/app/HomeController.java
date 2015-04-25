@@ -69,7 +69,7 @@ public class HomeController {
 			
 			Result_display display = null;
 			
-			display = displayDAO.getDisplaybyDateandGroup(localDate, userGroup);
+			display = displayDAO.getDisplaybyDateandGroup(date, userGroup);
 			List<Document> displayList = new ArrayList<Document>();
 			
 			if(display.getDocs()!=null){

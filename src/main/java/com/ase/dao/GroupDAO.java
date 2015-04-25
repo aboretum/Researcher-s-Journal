@@ -24,7 +24,7 @@ public class GroupDAO {
 	private DBCollection col;
 	
 	public GroupDAO(){
-		dbUtil = new DatabaseUtility();
+		dbUtil = DatabaseUtility.getInstance();
 		dbUtil.connect();
 		col = dbUtil.getCollection(dbCol);
 	}

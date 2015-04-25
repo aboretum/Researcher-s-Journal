@@ -87,7 +87,7 @@ public class AddDocumentController implements ServletContextAware {
             	doc.setDocType("figure");
             	doc.setDocUrl("foo.com");
             	doc.setDocID(doc_id);
-            	
+            	doc.setDocGroup(userGroup.getGroupName());
             	
             	
             	File image = null;
@@ -109,7 +109,7 @@ public class AddDocumentController implements ServletContextAware {
             
         	Result_display display = null;
 			
-			display = displayDAO.getDisplaybyDateandGroup(localDate, userGroup);
+			display = displayDAO.getDisplaybyDateandGroup(date, userGroup);
 			List<Document> displayList = new ArrayList<Document>();
 			
 			if(display.getDocs()!=null){

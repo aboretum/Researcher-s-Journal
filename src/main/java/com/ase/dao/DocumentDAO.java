@@ -34,7 +34,7 @@ public class DocumentDAO {
 	
 
 	public DocumentDAO(){
-		dbUtil = new DatabaseUtility();
+		dbUtil = DatabaseUtility.getInstance();
 		dbUtil.connect();
 		col = dbUtil.getCollection(dbCol);
 	}
@@ -52,7 +52,9 @@ public class DocumentDAO {
 				append("doc_author", document.getDocAuthor()).
 				append("doc_date", date).
 				append("doc_file", data).
-				append("doc_id", document.getDocID()).append("doc_private", false);
+				append("doc_id", document.getDocID()).
+				append("doc_private", false).
+				append("doc_group", document.getDocGroup());
 		
 		col.insert(doc);
 		}
@@ -158,6 +160,50 @@ public class DocumentDAO {
 		updateQuery.put("$set", 
 			new BasicDBObject().append("doc_private", !doc_privacy));
 		col.update(query, updateQuery);
+	}
+
+	public List<Document> searchKeyWordByRegex(String keyword, Group userGroup) {
+		List<Document> docList= new ArrayList<Document>();
+		List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
+		obj.add(new BasicDBObject("doc_name", new BasicDBObject("$regex", keyword).append("$options", "i")));
+		obj.add(new BasicDBObject("doc_content",new BasicDBObject("$regex", keyword).append("$options", "i")));
+		BasicDBObject regexQuery = new BasicDBObject();
+		regexQuery.put("doc_group", userGroup.getGroupName());
+		regexQuery.put("$or",obj);
+		
+		DBCursor cursor = col.find(regexQuery);
+		DBObject doc = null;
+		try{
+			while(cursor.hasNext()){
+				doc = cursor.next();
+				if(doc.get("doc_type").toString().equals("figure")){
+					Document document = null;
+					byte[] c = (byte[])doc.get("doc_file");
+					if(c==null){
+						System.out.println("byte is null");
+					}
+					String fileName = writeToFile(c);
+					File file = new File(fileName);
+					FigureDocument figureDoc = new FigureDocument();
+					figureDoc.setDocName(doc.get("doc_name").toString());
+					figureDoc.setDocType(doc.get("doc_type").toString());
+					figureDoc.setDocAuthor(doc.get("doc_author").toString());
+					figureDoc.setDocDate((Date)doc.get("doc_date"));
+					figureDoc.setDocPrivate((Boolean)doc.get("doc_private"));
+					figureDoc.setDocContent(doc.get("doc_content").toString());
+					figureDoc.setDocID(doc.get("doc_id").toString());
+					figureDoc.setImageFile(file);
+					figureDoc.setDocUrl(fileName);
+					document = (Document)figureDoc;
+					docList.add(document);
+				}
+				
+			}
+		}finally{
+			cursor.close();
+		}
+		
+		return docList;
 	}
 
 }

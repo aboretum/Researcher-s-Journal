@@ -107,7 +107,7 @@ pageEncoding="ISO-8859-1"%>
         <div id="page-wrapper">
        		
             <div class="container-fluid">
-                <div align="right" id="time" style="font-size:15px"></div><br><hr>
+                <div align="right" id="time" style="font-size:15px"></div><hr>
                 <div class = "row" style="font-size:15px">
                 	<div class="col-lg-3 col-md-6">
                         User: ${user.userName}
@@ -136,35 +136,10 @@ pageEncoding="ISO-8859-1"%>
                     				<div><textarea class="form-control" name="docDescription" placeholder="What kind of data this is?" rows="2"></textarea></div>
                     			</div>
                     		</div>
-                    		<br>
-                    		<div class = "row" style="font-size:15px">
-                   				
-                    		</div>
                     	  </form> 
                     	 </div>
                     </div>
                     
-                   
-    				<div class="row">
-    					<form method="post" action="SearchDisplay" name="submit">
-        				<div class='col-md-3'>
-        			
-            			<div class="form-group">
-                			<div class='input-group date' data-date="" data-date-format="mm/dd/yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd" id="form_date">
-                    		<input type='text' name="search_date" class="form-control" placeholder="Pick a date to retrieve"/>
-                    		<span class="input-group-addon">
-                        		<span class="glyphicon glyphicon-calendar"></span>
-                   			 </span>
-                   			 
-                			</div>
-            			</div>
-         
-        				</div>
-        				<div class='col-md-6'>
-        				<input type="submit" class="btn btn-primary" name="submit" value="Search" >
-        				</div>
-        				</form>
-    				</div>
 				
                 <h4>Or drag and drop files below</h4>
                  <div class="row">
@@ -178,7 +153,44 @@ pageEncoding="ISO-8859-1"%>
     						</form> 
                  	</div>
                  </div>
-          			
+                 
+                 <h4>Search previous records </h4>
+                
+                 
+                 <div class="row">
+                 	<div class = 'col-md-5'>
+    					<form method="post" action="SearchDisplay" name="submit">
+        					<div class='col-md-9'>
+        						<div class="form-group">
+                					<div class='input-group date' data-date="" data-date-format="mm/dd/yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd" id="form_date">
+                    					<input type='text' name="search_date" class="form-control" placeholder="Pick a date to retrieve"/>
+                    						<span class="input-group-addon">
+                        						<span class="glyphicon glyphicon-calendar"></span>
+                   							</span>
+                   			 		</div>
+            					</div>
+         					</div>
+        					<div class='col-md-3'>
+        						<input type="submit" class="btn btn-primary" name="submit" value="Search" >
+        					</div>
+        				</form>
+        			</div>
+        			
+        			<div class = 'col-md-5'>
+        				<form method="post" action="SearchText" name="submit">
+        					<div class='col-md-9'>
+        						<div class="form-group">
+                    				<input type='text' name="search_text" class="form-control" placeholder="Search specific information"/>
+                    				
+            					</div>
+         					</div>
+        					<div class='col-md-3'>
+        						<input type="submit" class="btn btn-primary" name="submit" value="Search" >
+        					</div>
+        				</form>
+        			</div>
+    			</div>
+          		<h4 style="color: #e50000">${info} </h4>	
                 <hr>
                 <h4> Recently Added Documents </h4>
                 <br/>

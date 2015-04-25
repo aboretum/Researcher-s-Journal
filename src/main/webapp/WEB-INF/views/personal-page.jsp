@@ -133,14 +133,6 @@ pageEncoding="ISO-8859-1"%>
                         
                     </form> 
                     
-                <h4>Or drag and drop files below</h4>
-                 <div class="row">
-                 	<div class="col-lg-10">
-                 		<div class="upload-drop-zone" id="drop-zone">
-            			Just drag and drop files here
-          				</div>
-                 	</div>
-                 </div>
           			
                 <hr>
                 <h4> Your personal documents </h4>

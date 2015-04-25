@@ -11,6 +11,7 @@ public class Document {
 	private Date docDate;
 	private String docUrl;
 	private boolean docPrivate;
+	private String docGroup;
 	
 	public void setDocType(String docType){
 		this.docType = docType;
@@ -74,6 +75,14 @@ public class Document {
 
 	public void setDocID(String docID) {
 		this.docID = docID;
+	}
+
+	public String getDocGroup() {
+		return docGroup;
+	}
+
+	public void setDocGroup(String docGroup) {
+		this.docGroup = docGroup;
 	}
 	
 }

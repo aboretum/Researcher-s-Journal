@@ -1,8 +1,5 @@
 package com.ase.dao;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-
 import org.springframework.cloud.Cloud;
 import org.springframework.cloud.CloudFactory;
 import org.springframework.cloud.service.common.MongoServiceInfo;
@@ -26,24 +23,21 @@ import com.mongodb.ServerAddress;
 
 public class DatabaseUtility {
 
-    Connection conn;
-    Statement stmt;
-    ResultSet result;
     MongoClient mongoClient;
     DB db;
     DBCollection coll;
+    private static DatabaseUtility dbUtil_instance= null;
     //CloudFactory cloudFactory = new CloudFactory();
 	//Cloud cloud = cloudFactory.getCloud();
 	//MongoServiceInfo srvInfo = (MongoServiceInfo) cloud.getServiceInfo("mongo02");
-	
-    public DatabaseUtility(){
-    	
-    	try{
-    		mongoClient = new MongoClient("localhost", 27017);
-    	}catch(Exception e){
-    		e.printStackTrace();
-    	}    	
-    }
+	public static synchronized DatabaseUtility getInstance(){
+		if(dbUtil_instance==null){
+			dbUtil_instance = new DatabaseUtility();
+		}
+		
+		return dbUtil_instance;
+	}
+    
     
     public void connect() {
     	try {
@@ -57,6 +51,14 @@ public class DatabaseUtility {
     public DBCollection getCollection(String collection){
     	DBCollection col = db.getCollection(collection);
     	return col;
+    }
+    
+    private DatabaseUtility(){
+    	try{
+    		mongoClient = new MongoClient("localhost", 27017);
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}    
     }
     
     /**

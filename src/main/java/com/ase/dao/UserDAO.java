@@ -24,7 +24,7 @@ public class UserDAO {
 	private DBCollection col;
 	
 	public UserDAO(){
-		dbUtil = new DatabaseUtility();
+		dbUtil = DatabaseUtility.getInstance();
 		dbUtil.connect();
 		col = dbUtil.getCollection(dbCol);
 	}

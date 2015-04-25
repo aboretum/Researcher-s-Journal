@@ -27,7 +27,7 @@ public class Result_DisplayDAO {
 	private DBCollection col;
 	
 	public Result_DisplayDAO(){
-		dbUtil = new DatabaseUtility();
+		dbUtil = DatabaseUtility.getInstance();
 		dbUtil.connect();
 		col = dbUtil.getCollection(dbCol);
 	}
@@ -143,10 +143,10 @@ public class Result_DisplayDAO {
 		return display;
 	}
 	
-	public Result_display getDisplaybyDateandGroup(String date, Group grp){
+	public Result_display getDisplaybyDateandGroup(Date date, Group grp){
 		Result_display display = new Result_display();
-		Date startDate = getStartOfDay(new Date());
-		Date endDate = getEndOfDay(new Date());
+		Date startDate = getStartOfDay(date);
+		Date endDate = getEndOfDay(date);
 		
 		BasicDBObject dateQuery = new BasicDBObject();
 		dateQuery.put("display_date", BasicDBObjectBuilder.start("$gte", startDate).add("$lte", endDate).get());
@@ -202,6 +202,52 @@ public class Result_DisplayDAO {
 		return display;
 	}
 	
+	public Result_display searchPreviousDisplaybyDateandGroup(Date date,
+			Group grp) {
+		Result_display display = null;
+		Date startDate = getStartOfDay(date);
+		Date endDate = getEndOfDay(date);
+		
+		BasicDBObject dateQuery = new BasicDBObject();
+		dateQuery.put("display_date", BasicDBObjectBuilder.start("$gte", startDate).add("$lte", endDate).get());
+		dateQuery.put("display_group", grp.getGroupName());
+		
+		DBCursor rdCursor = col.find(dateQuery);
+		DBObject doc = null;
+		try{
+			while(rdCursor.hasNext()){
+				doc=rdCursor.next();
+			}
+		}finally{
+			rdCursor.close();
+		}
+		
+		if(doc==null){
+			return display;
+		}
+		
+		display = new Result_display();
+		List<Document> display_docs = new ArrayList<Document>();
+		BasicDBList docList = (BasicDBList) doc.get("display_docs");
+		
+		if(docList!=null){
+			for(Object obj : docList){
+				DBObject docObj = (DBObject) obj;
+				Document d = new Document();
+				d.setDocDate((Date)docObj.get("doc_date"));
+				d.setDocAuthor(docObj.get("doc_author").toString());
+				display_docs.add(d);
+			}
+			
+			display.setDisplayId(doc.get("display_id").toString());
+			display.setCategory(doc.get("display_category").toString());
+			display.setDate(doc.get("display_date").toString());
+			display.setDocs(display_docs);
+		}
+		
+		return display;
+	}
+	
 	public void updateResult_display(Result_display display){
 		
 	}
@@ -233,5 +279,6 @@ public class Result_DisplayDAO {
 	    calendar.set(Calendar.MILLISECOND, 0);
 	    return calendar.getTime();
 	}
+	
 
 }
