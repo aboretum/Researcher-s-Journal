@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" isELIgnored="false"
@@ -40,8 +40,15 @@ pageEncoding="ISO-8859-1"%>
 	
     <!-- Bootstrap Core CSS -->
     <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
+    
 	<!-- Bootstrap Date Time Picker CSS -->
 	<link href="./resources/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
+	 
+	<!-- Custom Fonts -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="./resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	 
     <!-- Custom CSS -->
     <link href="./resources/css/sb-admin.css" rel="stylesheet">
@@ -84,13 +91,13 @@ pageEncoding="ISO-8859-1"%>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li >
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Textual Findings</a>
+                        <a href="index.html"><i class="icon-file-text-alt"></i> Textual Findings</a>
                     </li>
                     <li>
                         <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Result Figure Upload</a>
                     </li>
                     <li>
-                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Single File Upload</a>
+                        <a href="SingleFileUpload"><i class="icon-folder-open-alt"></i> Single File Upload</a>
                     </li>
                     <li>
                         <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Research Video Upload</a>
@@ -107,22 +114,47 @@ pageEncoding="ISO-8859-1"%>
         <div id="page-wrapper">
        		
             <div class="container-fluid">
-                <div align="right" id="time" style="font-size:15px"></div><hr>
-                <div class = "row" style="font-size:15px">
-                	<div class="col-lg-3 col-md-6">
-                        User: ${user.userName}
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        Title: ${user.member_title}
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        Member of: ${user.userGroup} 
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        Area of research: ${userGroup.groupArea} 
-                    </div>
-                </div>
-                <br><hr>
+                
+                
+                 
+                   <div class="row">
+                 	
+                 	<div class="col-lg-3" style="font-size:16px">
+                 		 
+                 		   <div class="well">
+                    <p><i class="icon-user icon-large"> </i> User: ${user.userName}</p>
+                </div>	
+    						
+                 	</div>
+                 	
+                 	<div class="col-lg-3" style="font-size:16px" >
+                 		 
+                 		<div class="well">
+                    		<p><i class="icon-beaker icon-large"> </i> Title: ${user.member_title}</p>
+                		</div>	
+    						
+                 	</div>
+                 	
+                 	<div class="col-lg-3" style="font-size:16px">
+                 		 
+                 		    <div class="well">
+                    <p><i class="icon-group icon-large">  </i>  Member of: ${user.userGroup}</p>
+                </div>	
+    						
+                 	</div>
+                 	
+                 	<div class="col-lg-3" style="font-size:16px">
+                 		 
+                 		   <div class="well">
+                    <p><i class="icon-globe icon-large"> </i> Area: ${userGroup.groupArea} </p>
+                </div>	
+    						
+                 	</div>
+                 </div>
+                 
+                  
+                
+                <hr>
                 <h4>Upload a new Document</h4>
                     
                     <div class="row">
@@ -205,20 +237,27 @@ pageEncoding="ISO-8859-1"%>
                                     
                                     <div class="col-xs-9 text-left">
                                         <div >Uploaded by ${document.docAuthor} </div>
-                                        <div>Description: ${document.docName}</div>
+                                        <div>Document Name: ${document.docName}</div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+                           
                                 <div class="panel-footer">
-      
+      								<div class="row">
+                                    
                                     <span class="pull-left" onclick="javascript:load_content('pnuts');">
-                                    	<img class="thumb-nail" src=".${document.docUrl}" width ="720" height="420" />
+                                    	<img class="img-thumbnail" src=".${document.docUrl}" width ="720" height="420" />
+                                    	
 									</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                </div>
+                                    <div class="row">
+                                    	<span class="pull-left">Description: ${document.docContent}</span>
+                                    </div>
+									<span class="pull-left"></span>
+                                    <span class="pull-right"></span>
                                     <div class="clearfix"></div>
                                 </div>
-                            </a>
+                            
                         </div>
                     </div>
                     

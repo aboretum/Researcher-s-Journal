@@ -53,6 +53,10 @@ public class SearchController {
 		HttpSession session = request.getSession(true);
 		String userName = (String)session.getAttribute("username");
 		String searchDateString = request.getParameter("search_date");
+		if(searchDateString.length()==0){
+			model.addAttribute("info", "Date can't be empty");
+			return "index";
+		}
 		Date searchDate = DateTimeUnit.getDateByString(searchDateString);
 		System.out.println(searchDate);
 	
@@ -81,7 +85,8 @@ public class SearchController {
 				for(Document document : display.getDocs()){
 					Document newDocument = DocDAO.getDocumentByDateandGroup(document.getDocDate(), userGroup);
 					if(!newDocument.isDocPrivate()){
-						displayList.add(0, newDocument);
+						if(newDocument.getDocType()!=null&&newDocument.getDocType().equals(".jpg"))
+							displayList.add(0, newDocument);
 					}
 				}
 				display.setDocs(displayList);

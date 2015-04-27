@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 
 
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -37,6 +38,7 @@ import com.ase.dao.GroupDAO;
 import com.ase.dao.Result_DisplayDAO;
 import com.ase.dao.UserDAO;
 import com.ase.util.DocumentPrivacyService;
+import com.ase.util.FigureIOService;
 
 import java.io.*;
 
@@ -63,8 +65,11 @@ public class AddDocumentController implements ServletContextAware {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		String localDate = dateFormat.format(date);
 		
-        String docType = "figure";
- 
+        String docType = figure.getContentType();
+        
+        System.out.println(figure.getContentType());
+        System.out.println(figure.getOriginalFilename());
+        
         HttpSession session = request.getSession(true);
 		String userName = (String)session.getAttribute("username");
 		
@@ -72,19 +77,23 @@ public class AddDocumentController implements ServletContextAware {
         	
         	User user = userDAO.getUserByName(userName);
 			Group userGroup = groupDAO.getGroupByName(user.getUserGroup());
-			
+			model.addAttribute("user", user);
+			model.addAttribute("userGroup", userGroup);
 			
 			DocDAO.setServletContext(this.servletContext);
-        	
-        	if(docType.equals("figure")){
-            	
-            	String fileName = "/resources/images/testFigure.jpg";
+        		
+            	String fileName = "/resources/images/testFigure"+FigureIOService.generateFileExtension(docType);
+            	if(FigureIOService.generateFileExtension(docType).equals("no support")){
+            		model.addAttribute("info", "No support for file upload");
+            		return "index";
+            	}
             	String doc_id = user.getUserName()+DocumentPrivacyService.generateUniqueDocID();
             	FigureDocument doc = new FigureDocument();
             	doc.setDocAuthor(user.getUserName());
             	doc.setDocContent("nocontent");
-            	doc.setDocName(docDes);
-            	doc.setDocType("figure");
+            	doc.setDocContent(docDes);
+            	doc.setDocName(figure.getOriginalFilename());
+            	doc.setDocType(FigureIOService.generateFileExtension(docType));
             	doc.setDocUrl("foo.com");
             	doc.setDocID(doc_id);
             	doc.setDocGroup(userGroup.getGroupName());
@@ -99,13 +108,12 @@ public class AddDocumentController implements ServletContextAware {
             		;
             	}
             	
-            	
                 doc.setImageFile(image);
                 DocDAO.addDocument(doc, date);
                 displayDAO.addNewDocumentToGroup(date, doc, userGroup);
                 displayDAO.addNewDocumentToUser(date, doc, user);
                 model.addAttribute("doc", doc);
-            }	
+            
             
         	Result_display display = null;
 			
@@ -123,10 +131,9 @@ public class AddDocumentController implements ServletContextAware {
 			}
 			
 			model.addAttribute("display", display);
-			model.addAttribute("user", user);
-			model.addAttribute("userGroup", userGroup);
+
 		}
-        
+       
 		return "index";
 	}
 

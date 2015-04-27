@@ -44,4 +44,24 @@ public class FigureIOService {
 	    filename=rndchars+"_"+datetime+"_"+millis;
 	    return filename;
 	}
+	
+	public static String generateFileExtension(String docType){
+		String resType = "";
+		if(docType.equals("image/jpeg")){
+			resType = ".jpg";
+		}else if(docType.equals("application/pdf")){
+			resType = ".pdf";
+		}else if(docType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")){
+			resType = ".docx";
+		}else if(docType.equals("application/msword")){
+			resType = ".doc";
+		}else if(docType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")){
+			resType = ".xlsx";
+		}else if(docType.equals("application/vnd.ms-excel")){
+			resType = ".xls";
+		}else{
+			resType = "no support";
+		}
+		return resType;
+	}
 }

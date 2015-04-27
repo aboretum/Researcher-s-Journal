@@ -40,10 +40,8 @@ public class DocumentDAO {
 	}
 	
 	public void addDocument(Document document, Date date){
-		
-		if(document.getDocType().equals("figure")){
-			FigureDocument figure = (FigureDocument)document;
-			Binary data = FigureIOService.figureTOBinary(figure);
+		FigureDocument figure = (FigureDocument)document;
+		Binary data = FigureIOService.figureTOBinary(figure);
 
 		BasicDBObject doc = new BasicDBObject("doc_name", document.getDocName()).
 				append("doc_type", document.getDocType()).
@@ -57,8 +55,6 @@ public class DocumentDAO {
 				append("doc_group", document.getDocGroup());
 		
 		col.insert(doc);
-		}
-		
 	}
 	
 	public Document getDocumentByDateandGroup(Date date, Group grp){
@@ -89,12 +85,33 @@ public class DocumentDAO {
 		document.setDocPrivate((Boolean)doc.get("doc_private"));
 		
 		
-		if(docType.equals("figure")){
+		if(docType.equals(".jpg")){
 			byte[] c = (byte[])doc.get("doc_file");
 			if(c==null){
 				System.out.println("byte is null");
 			}
-			String fileName = writeToFile(c);
+			String fileName = writeToFile(c, docType);
+			File file = new File(fileName);
+			FigureDocument figureDoc = new FigureDocument();
+			figureDoc.setDocName(doc.get("doc_name").toString());
+			figureDoc.setDocType(doc.get("doc_type").toString());
+			figureDoc.setDocAuthor(doc.get("doc_author").toString());
+			figureDoc.setDocDate((Date)doc.get("doc_date"));
+			figureDoc.setDocPrivate((Boolean)doc.get("doc_private"));
+			
+			figureDoc.setDocContent(doc.get("doc_content").toString());
+			figureDoc.setDocID(doc.get("doc_id").toString());
+			figureDoc.setImageFile(file);
+			figureDoc.setDocUrl(fileName);
+			document = (Document)figureDoc;
+		}
+		
+		if(docType.equals(".pdf")){
+			byte[] c = (byte[])doc.get("doc_file");
+			if(c==null){
+				System.out.println("byte is null");
+			}
+			String fileName = writeToFile(c, docType);
 			File file = new File(fileName);
 			FigureDocument figureDoc = new FigureDocument();
 			figureDoc.setDocName(doc.get("doc_name").toString());
@@ -113,8 +130,8 @@ public class DocumentDAO {
 	}
 	
 	
-	public String writeToFile(byte[] data){
-		String fileNameBefore = "/resources/images/"+FigureIOService.generateUniqueFileName()+".jpg";
+	public String writeToFile(byte[] data, String docType){
+		String fileNameBefore = "/resources/images/"+FigureIOService.generateUniqueFileName()+docType;
 		String fileName = servletContext.getRealPath(fileNameBefore);
 		
 		try{
@@ -176,13 +193,13 @@ public class DocumentDAO {
 		try{
 			while(cursor.hasNext()){
 				doc = cursor.next();
-				if(doc.get("doc_type").toString().equals("figure")){
+				if(doc.get("doc_type").toString().equals(".jpg")){
 					Document document = null;
 					byte[] c = (byte[])doc.get("doc_file");
 					if(c==null){
 						System.out.println("byte is null");
 					}
-					String fileName = writeToFile(c);
+					String fileName = writeToFile(c, ".jpg");
 					File file = new File(fileName);
 					FigureDocument figureDoc = new FigureDocument();
 					figureDoc.setDocName(doc.get("doc_name").toString());
@@ -204,6 +221,57 @@ public class DocumentDAO {
 		}
 		
 		return docList;
+	}
+
+	public Document getDocumentByGroup(Group userGroup) {
+		Document document = new Document();
+		
+		
+		
+		
+		return document;
+	}
+
+	public List<Document> getSingleFileDocumentByGroup(Group userGroup) {
+		List<Document> docList = new ArrayList<Document>();
+		BasicDBObject query = new BasicDBObject();
+		query.put("doc_group", userGroup.getGroupName());
+		
+		DBCursor cursor = col.find(query);
+		DBObject doc = null;
+		try{
+			while(cursor.hasNext()){
+				Document document;
+				doc = cursor.next();
+				String docType = doc.get("doc_type").toString();
+				if(docType.equals(".pdf")||docType.equals(".docx")||
+						docType.equals(".doc")||docType.equals(".xlsx")||docType.equals(".xls")){
+					byte[] c = (byte[])doc.get("doc_file");
+					if(c==null){
+						System.out.println("byte is null");
+					}
+					String fileName = writeToFile(c, docType);
+					File file = new File(fileName);
+					FigureDocument figureDoc = new FigureDocument();
+					figureDoc.setDocName(doc.get("doc_name").toString());
+					figureDoc.setDocType(doc.get("doc_type").toString());
+					figureDoc.setDocAuthor(doc.get("doc_author").toString());
+					figureDoc.setDocDate((Date)doc.get("doc_date"));
+					figureDoc.setDocPrivate((Boolean)doc.get("doc_private"));
+					figureDoc.setDocContent(doc.get("doc_content").toString());
+					figureDoc.setDocID(doc.get("doc_id").toString());
+					figureDoc.setImageFile(file);
+					figureDoc.setDocUrl(fileName);
+					document = (Document)figureDoc;
+					docList.add(document);
+				}
+			}
+		}finally{
+			cursor.close();
+		}
+		
+		return docList;
+		
 	}
 
 }

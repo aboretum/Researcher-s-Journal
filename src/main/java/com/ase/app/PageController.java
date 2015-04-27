@@ -47,7 +47,7 @@ public class PageController {
 	 * Display the user group information.
 	 */
 	@RequestMapping(value = "/GroupInfo", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpServletRequest request) {
+	public String group(Locale locale, Model model, HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		HttpSession session = request.getSession(true);
@@ -62,6 +62,33 @@ public class PageController {
 		return "group-overview";
 	}
 	
+	@RequestMapping(value = "/SingleFileUpload", method = RequestMethod.GET)
+	public String singleFile(Locale locale, Model model, HttpServletRequest request){
+		logger.info("Welcome home! The client locale is {}.", locale);
+		HttpSession session = request.getSession(true);
+		String userName = (String)session.getAttribute("username");
+		if(userName!=null){
+			User user = userDAO.getUserByName(userName);
+			Group userGroup = groupDAO.getGroupByName(user.getUserGroup());
+			model.addAttribute("userGroup", userGroup);
+			model.addAttribute(userGroup.getUsers());
+			
+			List<Document> docList = new ArrayList<Document>();
+			DocDAO.setServletContext(servletContext);
+			docList= DocDAO.getSingleFileDocumentByGroup(userGroup);
+			
+			if(docList!=null){
+				model.addAttribute("files", docList);
+			}
+		}
+		
+		
+		return "single-file-upload";
+	}
+	
+	/**
+	 * Process request for retrieving user's personal page.
+	 */
 	@RequestMapping(value = "/PersonalPage", method = RequestMethod.GET)
 	public String userProfile(Locale locale, Model model, HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -81,7 +108,8 @@ public class PageController {
 		if(display.getDocs()!=null){
 			for(Document document : display.getDocs()){
 				Document newDocument = DocDAO.getDocumentByDateandGroup(document.getDocDate(), userGroup);
-				displayList.add(0, newDocument);
+				if(newDocument.getDocType()!=null&&newDocument.getDocType().equals(".jpg"))
+					displayList.add(0, newDocument);
 			}
 			display.setDocs(displayList);
 		}
@@ -93,6 +121,10 @@ public class PageController {
 		return "personal-page";
 	}
 	
+	/**
+	 * Providing the functionality to toggle the privacy property of a file
+	 * from user's personal page.
+	 */
 	@RequestMapping(value = "/ToggleDocPrivacy", method = RequestMethod.GET)
 	public String userDocPrivacy(Locale locale, Model model, HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);

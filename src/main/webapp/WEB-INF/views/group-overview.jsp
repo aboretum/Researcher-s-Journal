@@ -101,10 +101,11 @@ pageEncoding="ISO-8859-1"%>
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
-                <div align="right" id="time" style="font-size:15px"></div><br><hr>
+                <div align="right" id="time" style="font-size:15px"></div><br>
                 <h4>Welcome to group: ${userGroup.groupName}</h4>
                 <br>
                 <div class = "row" style="font-size:15px">
+                	<div class="col-lg-10">
                 	<table class="table table-hover">
                 		<thead>
                 		<tr>
@@ -121,39 +122,12 @@ pageEncoding="ISO-8859-1"%>
 						</tr>
 						</c:forEach>
                 	</table>
-                   
+                   </div>
                 </div>
                 <br>
                     
                 <hr>
-                <h4> Recently Added Documents </h4>
-                <br/>
-                <div class="row">
-                    <div class="col-lg-10 ">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    
-                                    <div class="col-xs-9 text-left">
-                                        <div class="huge">${doc.docAuthor} </div>
-                                        <div>${doc.docName}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-      
-                                    <span class="pull-left" onclick="javascript:load_content('pnuts');">
-                                    	<img class="thumb-nail" src=".${doc.docUrl}" width ="900" height="600" />
-									</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    
-                </div>
+                
             </div>
             <hr>
             <div id = "content_div" hidden=true style="border:1px solid black;height:40%;overflow:auto">
