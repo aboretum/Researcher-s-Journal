@@ -42,7 +42,8 @@ pageEncoding="ISO-8859-1"%>
 
     <!-- Bootstrap Core CSS -->
     <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
-
+	<!-- Custom Fonts -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="./resources/css/sb-admin.css" rel="stylesheet">
     <link href="./resources/css/layout.css" rel="stylesheet">
@@ -107,21 +108,42 @@ pageEncoding="ISO-8859-1"%>
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
-                <div align="right" id="time" style="font-size:15px"></div><br><hr>
-                <div class = "row" style="font-size:15px">
-                	<div class="col-lg-3 col-md-6">
-                        User: ${user.userName}
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        Title: ${user.member_title}
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        Member of: ${user.userGroup} 
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        Area of research: ${userGroup.groupArea} 
-                    </div>
-                </div>
+                
+                   <div class="row">
+                 	
+                 	<div class="col-lg-3" style="font-size:16px">
+                 		 
+                 		   <div class="well">
+                    <p><i class="icon-user icon-large"> </i> User: ${user.userName}</p>
+                </div>	
+    						
+                 	</div>
+                 	
+                 	<div class="col-lg-3" style="font-size:16px" >
+                 		 
+                 		<div class="well">
+                    		<p><i class="icon-beaker icon-large"> </i> Title: ${user.member_title}</p>
+                		</div>	
+    						
+                 	</div>
+                 	
+                 	<div class="col-lg-3" style="font-size:16px">
+                 		 
+                 		    <div class="well">
+                    <p><i class="icon-group icon-large">  </i>  Member of: ${user.userGroup}</p>
+                </div>	
+    						
+                 	</div>
+                 	
+                 	<div class="col-lg-3" style="font-size:16px">
+                 		 
+                 		   <div class="well">
+                    <p><i class="icon-globe icon-large"> </i> Area: ${userGroup.groupArea} </p>
+                </div>	
+    						
+                 	</div>
+                 </div>
+                 
                 <br><hr>
                 <h4>Upload a new Document</h4>
                     <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data" >

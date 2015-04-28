@@ -74,8 +74,8 @@ public class LoginController {
     		model.addAttribute("doc", doc);
     			
         }else{
-        	model.addAttribute("action","wrong pass");
-        	return "info";
+        	model.addAttribute("info","wrong password or user does not exist");
+        	return "index";
         }
         
 		

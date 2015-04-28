@@ -6,7 +6,7 @@
 <% String sessionUsername = (String)session.getAttribute("username"); %>
 
 <% if(sessionUsername == null){ %>
-	<jsp:include page="home.jsp" flush="true" />
+	<jsp:include page="login2.jsp" flush="true" />
 	
 <% }else{ %>
 
