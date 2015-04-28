@@ -9,6 +9,39 @@ pageEncoding="ISO-8859-1"%>
 <html>
 <head>
 
+<style>
+    /* styles unrelated to zoom */
+        * { border:0; margin:0; padding:0; }
+        p { position:absolute; top:3px; right:28px; color:#555; font:bold 13px/1 sans-serif;}
+
+        /* these styles are for the demo, but are not required for the plugin */
+        .zoom {
+            display:inline-block;
+            position: relative;
+        }
+        
+        /* magnifying glass icon */
+        .zoom:after {
+            content:'';
+            display:block; 
+            width:33px; 
+            height:33px; 
+            position:absolute; 
+            top:0;
+            right:0;
+            background:url(icon.png);
+        }
+
+        .zoom img {
+            display: block;
+        }
+
+        .zoom img::selection { background-color: transparent; }
+
+        #ex2 img:hover { cursor: url(grab.cur), default; }
+        #ex2 img:active { cursor: url(grabbed.cur), default; }
+	</style>
+
     <script>
     function startTime() {
         var today=new Date();
@@ -173,7 +206,7 @@ pageEncoding="ISO-8859-1"%>
                     </div>
                     
 				
-                <h4>Or drag and drop files below</h4>
+               <!--  <h4>Or drag and drop files below</h4>
                  <div class="row">
                  	
                  	<div class="col-lg-10" >
@@ -184,7 +217,7 @@ pageEncoding="ISO-8859-1"%>
     						</div>
     						</form> 
                  	</div>
-                 </div>
+                 </div> -->
                  
                  <h4>Search previous records </h4>
                 
@@ -246,9 +279,14 @@ pageEncoding="ISO-8859-1"%>
       								<div class="row">
                                     
                                     <span class="pull-left" onclick="javascript:load_content('pnuts');">
-                                    	<img class="img-thumbnail" src=".${document.docUrl}" width ="720" height="420" />
+                                    </span>
+                                    <div id="box" style="overflow:auto">
+	                                    <span class='zoom' id='ex1'>
+	                                    	<img class="img-thumbnail" src=".${document.docUrl}" width ="720" height="420" />
+	                                    </span>
+                                   	</div>
                                     	
-									</span>
+									
                                 </div>
                                     <div class="row">
                                     	<span class="pull-left">Description: ${document.docContent}</span>
@@ -389,6 +427,7 @@ pageEncoding="ISO-8859-1"%>
 	 <!-- Bootstrap Date Time Picker JavaScript -->
 	<script type="text/javascript" src="./resources/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="./resources/js/locales/bootstrap-datetimepicker.ar.js" charset="UTF-8"></script>
+	<script src='./resources/js/jquery.zoom.js' charset="UTF-8"></script>
 	<script type="text/javascript">
 	$('#form_date').datetimepicker({
         weekStart: 1,
@@ -415,6 +454,11 @@ pageEncoding="ISO-8859-1"%>
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
+    
+    $(document).ready(function(){
+        $('#ex1').zoom();
+    });
+    
     </script>
 </body>
 </html>
