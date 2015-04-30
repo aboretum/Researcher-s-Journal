@@ -72,18 +72,18 @@ public class AddUserController {
 					}
 					
 					System.out.println("reg complete");
-					model.addAttribute("action","regcomplete");
+					model.addAttribute("info","Sign up complete");
 				}
 				
-				model.addAttribute("action","wrong group key");
+				model.addAttribute("info","Wrong group key");
 				
 			}else{
-				model.addAttribute("action","wrongpass");
+				model.addAttribute("info","Password not matching");
 				System.out.println("wrong pass");
 			}
 			
 		}else{
-			model.addAttribute("action", "userexists");
+			model.addAttribute("info", "User already exists");
 			System.out.println("user exists");
 		}
 		
@@ -91,6 +91,6 @@ public class AddUserController {
 		
 		//model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
+		return "login2";
 	}
 }

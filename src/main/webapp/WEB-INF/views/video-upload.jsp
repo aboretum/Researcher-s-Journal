@@ -34,7 +34,7 @@ pageEncoding="ISO-8859-1"%>
  
   
 
-    <title>Single File</title>
+    <title>Video Upload</title>
     
 
 	
@@ -43,8 +43,10 @@ pageEncoding="ISO-8859-1"%>
     
 	<!-- Bootstrap Date Time Picker CSS -->
 	<link href="./resources/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
+	<!-- Add fancyBox -->
+	<link rel="stylesheet" href="./resources/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" /> 
 	 
-	   <!-- Custom Fonts -->
+	<!-- Custom Fonts -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="./resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -91,13 +93,13 @@ pageEncoding="ISO-8859-1"%>
                     <li >
                         <a href="index.html"><i class="icon-file-text-alt"></i> Textual Findings</a>
                     </li>
-                    <li>
+                    <li >
                         <a href="ResultFigureUpload"><i class="fa fa-fw fa-bar-chart-o"></i> Result Figure Upload</a>
                     </li>
-                    <li class="active">
-                        <a href="SingleFileUpload" ><i class="icon-folder-open-alt"></i> Single File Upload</a>
-                    </li>
                     <li>
+                        <a href="SingleFileUpload"><i class="icon-folder-open-alt"></i> Single File Upload</a>
+                    </li>
+                    <li class="active">
                         <a href="VideoUpload"><i class="fa fa-fw fa-edit"></i> Research Video Upload</a>
                     </li>
                     
@@ -119,13 +121,14 @@ pageEncoding="ISO-8859-1"%>
                    
             
                     <div class="col-lg-10">
-                        <h2>Uploaded Files</h2>
+                        <h2>Video upload not supported yet.</h2>
+                        <p>You can use youtube private video upload and share the link within the group</p>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>File Name</th>
-                                        <th>Download</th>
+                                        <th>Video name</th>
+                                        <th>Link</th>
                                         <th>Uploaded by</th>
                                         <th>Upload Date</th>
                                     </tr>
@@ -134,7 +137,8 @@ pageEncoding="ISO-8859-1"%>
                                 	<c:forEach items="${files}" var="document">
                                     	<tr>
                                         	<td>${document.docName}</td>
-                                        	<td><a href=".${document.docUrl}"><i class="icon-cloud-download">  </i>  get source</a></td>
+                                        	
+                                        	<td><a class="fancybox" rel="group" href=".${document.docUrl}"><i class="icon-eye-open"></i>  View Image</a></td>
                                         	<td>${document.docAuthor}</td>
                                         	<td>${document.docDate}</td>
                                     	</tr>
@@ -156,7 +160,7 @@ pageEncoding="ISO-8859-1"%>
     
 	
 	<script type="text/javascript" src="./resources/js/jquery-1.8.3.min.js"></script>
-
+	<script type="text/javascript" src="./resources/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="./resources/js/bootstrap.min.js"></script>
 	 <!-- Bootstrap Date Time Picker JavaScript -->
@@ -189,5 +193,11 @@ pageEncoding="ISO-8859-1"%>
         $("#wrapper").toggleClass("toggled");
     });
     </script>
+    
+     <script type="text/javascript">
+	$(document).ready(function() {
+		$(".fancybox").fancybox();
+	});
+	</script>
 </body>
 </html>

@@ -41,6 +41,10 @@ public class AddGroupController {
 		String groupKeyConfirm = request.getParameter("confirm_group_key");
 		String area_of_interest = request.getParameter("field_study");;
 		
+		if(!groupKey.equals(groupKeyConfirm)){
+			model.addAttribute("info","Group Key doesn't match");
+			return "login2";
+		}
 		
 		Group grp = new Group();
 		grp.setGroupName(groupName);
@@ -51,8 +55,9 @@ public class AddGroupController {
 		
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("info", "Group created: "+groupName);
 		
-		return "home";
+		return "login2";
 	}
 	
 }

@@ -44,7 +44,11 @@ pageEncoding="ISO-8859-1"%>
     
 	<!-- Bootstrap Date Time Picker CSS -->
 	<link href="./resources/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
-	 
+	<!-- Add fancyBox -->
+	<link rel="stylesheet" href="./resources/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+ 	
+ 	
+ 	
 	<!-- Custom Fonts -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
@@ -123,13 +127,13 @@ pageEncoding="ISO-8859-1"%>
                         <a href="index.html"><i class="icon-file-text-alt"></i> Textual Findings</a>
                     </li>
                     <li>
-                        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Result Figure Upload</a>
+                        <a href="ResultFigureUpload"><i class="fa fa-fw fa-bar-chart-o"></i> Result Figure Upload</a>
                     </li>
                     <li>
                         <a href="SingleFileUpload"><i class="icon-folder-open-alt"></i> Single File Upload</a>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Research Video Upload</a>
+                        <a href="VideoUpload"><i class="fa fa-fw fa-edit"></i> Research Video Upload</a>
                     </li>
                     
                     
@@ -202,18 +206,18 @@ pageEncoding="ISO-8859-1"%>
                     </div>
                     
 				
-               <!--  <h4>Or drag and drop files below</h4>
+                <h4>Or drag and drop files below</h4>
                  <div class="row">
                  	
                  	<div class="col-lg-10" >
-                 		 <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data" >
+                 			 <div style="display:none" > <input id="fileupload" type="file" name="fileField" data-url="AddDocument2" multiple></div>
                  			
                  		    <div id ="upload-drop-zone" >
            						Just drag and drop files here
     						</div>
-    						</form> 
+    						
                  	</div>
-                 </div> -->
+                 </div> 
                  
                  <h4>Search previous records </h4>
                 
@@ -264,29 +268,31 @@ pageEncoding="ISO-8859-1"%>
                             <div class="panel-heading">
                                 <div class="row">
                                     
-                                    <div class="col-xs-9 text-left">
+                                    <div class="col-xs-7 text-left">
                                         <div >Uploaded by ${document.docAuthor} </div>
                                         <div>Document Name: ${document.docName}</div>
                                     </div>
+                                    <div class="col-xs-5 text-right">
+                                    	 <div >Uploaded on: ${document.docDate} </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                            
                                 <div class="panel-footer">
-      								<div class="row">
-                                    
+      								
                                     <span class="pull-left" onclick="javascript:load_content('pnuts');">
                                     </span>
                                     <div id="box" style="overflow:auto">
-	                                    <span class='zoom' id='ex1'>
-	                                    	<img class="img-thumbnail" src=".${document.docUrl}" width ="720" height="420" />
-	                                    </span>
+                                    	<a class="fancybox" rel="group" href=".${document.docUrl}"><img src=".${document.docUrl}" alt="" width ="720" height="420" /></a>
+	                                  
                                    	</div>
-                                    	
-									
-                                </div>
+                                	
+                                	
                                     <div class="row">
                                     	<span class="pull-left">Description: ${document.docContent}</span>
                                     </div>
+                                    
 									<span class="pull-left"></span>
                                     <span class="pull-right"></span>
                                     <div class="clearfix"></div>
@@ -417,13 +423,21 @@ pageEncoding="ISO-8859-1"%>
     
 	
 	<script type="text/javascript" src="./resources/js/jquery-1.8.3.min.js"></script>
-
+	<script type="text/javascript" src="./resources/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+	
+	<script src="./resources/js/myuploadfunction.js"></script>
+	
+	<script src="./resources/js/vendor/jquery.ui.widget.js"></script>
+	<script src="./resources/js/jquery.iframe-transport.js"></script>
+	<script src="./resources/js/jquery.fileupload.js"></script>
+	
+	
+	
     <!-- Bootstrap Core JavaScript -->
     <script src="./resources/js/bootstrap.min.js"></script>
 	 <!-- Bootstrap Date Time Picker JavaScript -->
 	<script type="text/javascript" src="./resources/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="./resources/js/locales/bootstrap-datetimepicker.ar.js" charset="UTF-8"></script>
-	<script src='./resources/js/jquery.zoom.js' charset="UTF-8"></script>
 	<script type="text/javascript">
 	$('#form_date').datetimepicker({
         weekStart: 1,
@@ -437,12 +451,6 @@ pageEncoding="ISO-8859-1"%>
 </script>
 	
 	
-	<script src="./resources/js/vendor/jquery.ui.widget.js"></script>
-	<script src="./resources/js/jquery.iframe-transport.js"></script>
-	<script src="./resources/js/jquery.fileupload.js"></script>
-	
-	
-	<script src="./resources/js/myuploadfunction.js"></script>
 	
     <!-- Menu Toggle Script -->
     <script>
@@ -451,10 +459,12 @@ pageEncoding="ISO-8859-1"%>
         $("#wrapper").toggleClass("toggled");
     });
     
-    $(document).ready(function(){
-        $('#ex1').zoom();
-    });
-    
     </script>
+    
+    <script type="text/javascript">
+	$(document).ready(function() {
+		$(".fancybox").fancybox();
+	});
+	</script>
 </body>
 </html>

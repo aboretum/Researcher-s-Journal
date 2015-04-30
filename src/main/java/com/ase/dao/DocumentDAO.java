@@ -274,4 +274,44 @@ public class DocumentDAO {
 		
 	}
 
+	public List<Document> getResultFigureDocumentByGroup(Group userGroup) {
+		List<Document> docList = new ArrayList<Document>();
+		BasicDBObject query = new BasicDBObject();
+		query.put("doc_group", userGroup.getGroupName());
+		
+		DBCursor cursor = col.find(query);
+		DBObject doc = null;
+		try{
+			while(cursor.hasNext()){
+				Document document;
+				doc = cursor.next();
+				String docType = doc.get("doc_type").toString();
+				if(docType.equals(".jpg")){
+					byte[] c = (byte[])doc.get("doc_file");
+					if(c==null){
+						System.out.println("byte is null");
+					}
+					String fileName = writeToFile(c, docType);
+					File file = new File(fileName);
+					FigureDocument figureDoc = new FigureDocument();
+					figureDoc.setDocName(doc.get("doc_name").toString());
+					figureDoc.setDocType(doc.get("doc_type").toString());
+					figureDoc.setDocAuthor(doc.get("doc_author").toString());
+					figureDoc.setDocDate((Date)doc.get("doc_date"));
+					figureDoc.setDocPrivate((Boolean)doc.get("doc_private"));
+					figureDoc.setDocContent(doc.get("doc_content").toString());
+					figureDoc.setDocID(doc.get("doc_id").toString());
+					figureDoc.setImageFile(file);
+					figureDoc.setDocUrl(fileName);
+					document = (Document)figureDoc;
+					docList.add(document);
+				}
+			}
+		}finally{
+			cursor.close();
+		}
+		
+		return docList;
+	}
+
 }

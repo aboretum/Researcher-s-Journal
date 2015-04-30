@@ -62,6 +62,9 @@ public class PageController {
 		return "group-overview";
 	}
 	
+	/**
+	 * Process request for the page containing non-viewable files.
+	 */
 	@RequestMapping(value = "/SingleFileUpload", method = RequestMethod.GET)
 	public String singleFile(Locale locale, Model model, HttpServletRequest request){
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -84,6 +87,49 @@ public class PageController {
 		
 		
 		return "single-file-upload";
+	}
+	
+	/**
+	 * Process request for the page all the figures uploaded to a group.
+	 */
+	@RequestMapping(value = "/ResultFigureUpload", method = RequestMethod.GET)
+	public String resultFigure(Locale locale, Model model, HttpServletRequest request){
+		logger.info("Welcome home! The client locale is {}.", locale);
+		HttpSession session = request.getSession(true);
+		String userName = (String)session.getAttribute("username");
+		if(userName!=null){
+			User user = userDAO.getUserByName(userName);
+			Group userGroup = groupDAO.getGroupByName(user.getUserGroup());
+			model.addAttribute("userGroup", userGroup);
+			model.addAttribute(userGroup.getUsers());
+			
+			List<Document> docList = new ArrayList<Document>();
+			DocDAO.setServletContext(servletContext);
+			docList= DocDAO.getResultFigureDocumentByGroup(userGroup);
+			
+			if(docList!=null){
+				model.addAttribute("files", docList);
+			}
+		}
+		
+		return "result-figure-upload";
+	}
+	
+	@RequestMapping(value = "/VideoUpload", method = RequestMethod.GET)
+	public String videoUpload(Locale locale, Model model, HttpServletRequest request){
+		logger.info("Welcome home! The client locale is {}.", locale);
+		HttpSession session = request.getSession(true);
+		String userName = (String)session.getAttribute("username");
+		if(userName!=null){
+			User user = userDAO.getUserByName(userName);
+			Group userGroup = groupDAO.getGroupByName(user.getUserGroup());
+			List<Document> docList = new ArrayList<Document>();
+			model.addAttribute("userGroup", userGroup);
+			model.addAttribute(userGroup.getUsers());
+			model.addAttribute("files", docList);
+		}
+		
+		return "video-upload";
 	}
 	
 	/**

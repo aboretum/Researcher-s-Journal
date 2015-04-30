@@ -136,6 +136,88 @@ public class AddDocumentController implements ServletContextAware {
        
 		return "index";
 	}
+	
+	@RequestMapping(value = "/AddDocument2", method = RequestMethod.POST)
+	public String addDoc2(Locale locale, Model model, HttpServletRequest request, 
+			@RequestParam(value="fileField")MultipartFile figure
+			) {
+		
+		
+		logger.info("Welcome home! The client locale is {}.", locale);
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		String localDate = dateFormat.format(date);
+		
+        String docType = figure.getContentType();
+        
+        System.out.println(figure.getContentType());
+        System.out.println(figure.getOriginalFilename());
+        
+        HttpSession session = request.getSession(true);
+		String userName = (String)session.getAttribute("username");
+		
+        if(userName!=null){
+        	
+        	User user = userDAO.getUserByName(userName);
+			Group userGroup = groupDAO.getGroupByName(user.getUserGroup());
+			model.addAttribute("user", user);
+			model.addAttribute("userGroup", userGroup);
+			
+			DocDAO.setServletContext(this.servletContext);
+        		
+            	String fileName = "/resources/images/testFigure"+FigureIOService.generateFileExtension(docType);
+            	if(FigureIOService.generateFileExtension(docType).equals("no support")){
+            		model.addAttribute("info", "No support for file upload");
+            		return "index";
+            	}
+            	String doc_id = user.getUserName()+DocumentPrivacyService.generateUniqueDocID();
+            	FigureDocument doc = new FigureDocument();
+            	doc.setDocAuthor(user.getUserName());
+            	doc.setDocContent("nocontent");
+            	doc.setDocName(figure.getOriginalFilename());
+            	doc.setDocType(FigureIOService.generateFileExtension(docType));
+            	doc.setDocUrl("foo.com");
+            	doc.setDocID(doc_id);
+            	doc.setDocGroup(userGroup.getGroupName());
+            	
+            	
+            	File image = null;
+            	try{
+            		image = new File(servletContext.getRealPath(fileName));
+                
+                FileUtils.writeByteArrayToFile(image, figure.getBytes());
+            	}catch(IOException e){
+            		;
+            	}
+            	
+                doc.setImageFile(image);
+                DocDAO.addDocument(doc, date);
+                displayDAO.addNewDocumentToGroup(date, doc, userGroup);
+                displayDAO.addNewDocumentToUser(date, doc, user);
+                model.addAttribute("doc", doc);
+            
+            
+        	Result_display display = null;
+			
+			display = displayDAO.getDisplaybyDateandGroup(date, userGroup);
+			List<Document> displayList = new ArrayList<Document>();
+			
+			if(display.getDocs()!=null){
+				for(Document document : display.getDocs()){
+					Document newDocument = DocDAO.getDocumentByDateandGroup(document.getDocDate(), userGroup);
+					if(!newDocument.isDocPrivate()){
+					displayList.add(0, newDocument);
+					}
+				}
+				display.setDocs(displayList);
+			}
+			
+			model.addAttribute("display", display);
+
+		}
+       
+		return "index";
+	}
 
 	@Override
 	public void setServletContext(ServletContext ctx) {
