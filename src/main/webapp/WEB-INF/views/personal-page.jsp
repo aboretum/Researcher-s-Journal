@@ -181,16 +181,23 @@ pageEncoding="ISO-8859-1"%>
                                     
                                 </div>
                             </div>
-                            <a href="#">
+                           
                                 <div class="panel-footer">
-      
-                                    <span class="pull-left" onclick="javascript:load_content('pnuts');">
-                                    	<img class="thumb-nail" src=".${document.docUrl}" width ="720" height="420" />
-									</span>
+      								<c:choose>
+  										<c:when test="${document.docType eq 'textDoc'}">
+  										</c:when>
+  										<c:otherwise>
+  											<div id="box" style="overflow:auto">
+                                    			<a class="fancybox" rel="group" href=".${document.docUrl}"><img src=".${document.docUrl}" alt="" width ="720" height="420" /></a>
+                                   			</div>
+  										</c:otherwise>
+									</c:choose>
+									
+                                    <span class="pull-left">Description: ${document.docContent}</span>
                                     <span class="pull-right"></span>
                                     <div class="clearfix"></div>
                                 </div>
-                            </a>
+                           
                         </div>
                     </div>
                     

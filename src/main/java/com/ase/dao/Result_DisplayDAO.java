@@ -40,7 +40,7 @@ public class Result_DisplayDAO {
 	}
 	
 
-	public void addNewDocumentToGroup(Date date, FigureDocument document, Group userGroup) {
+	public void addNewDocumentToGroup(Date date, Document document, Group userGroup) {
 		Date startDate = getStartOfDay(new Date());
 		Date endDate = getEndOfDay(new Date());
 		
@@ -67,7 +67,7 @@ public class Result_DisplayDAO {
 			
 	}
 	
-	public void addNewDocumentToUser(Date date, FigureDocument document, User user){
+	public void addNewDocumentToUser(Date date, Document document, User user){
 		BasicDBObject query = new BasicDBObject("display_user", user.getUserName());
 		
 		DBCursor cursor = col.find(query);

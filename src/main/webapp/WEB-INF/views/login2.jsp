@@ -9,7 +9,11 @@
 
  <!-- Bootstrap Core CSS -->
     <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
-    
+    <!-- Custom Fonts -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="./resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     
 </head>
 <body>
@@ -29,12 +33,12 @@
                         <form id="loginform" class="form-horizontal" role="form" action = "Login" method=POST>
                                     
                             <div style="margin-bottom: 25px" class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <span class="input-group-addon"><i class="icon-user"></i></span>
                                         <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="username">                                        
                                     </div>
                                 
                             <div style="margin-bottom: 25px" class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                        <span class="input-group-addon"><i class="icon-lock"></i></span>
                                         <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
                                     </div>
                                     

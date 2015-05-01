@@ -133,7 +133,7 @@ public class AddDocumentController implements ServletContextAware {
 			model.addAttribute("display", display);
 
 		}
-       
+     
 		return "index";
 	}
 	
@@ -219,6 +219,71 @@ public class AddDocumentController implements ServletContextAware {
 		return "index";
 	}
 
+	@RequestMapping(value = "/AddTextDocument", method = RequestMethod.POST)
+	public String addTextDoc(Locale locale, Model model, HttpServletRequest request, 
+			@RequestParam(value="docName")String docName,
+			@RequestParam(value="docDescription")String docDes
+			) {
+		
+		
+		logger.info("Welcome home! The client locale is {}.", locale);
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		String localDate = dateFormat.format(date);
+		
+        String docType = "textDoc";
+        
+        HttpSession session = request.getSession(true);
+		String userName = (String)session.getAttribute("username");
+		
+        if(userName!=null){
+        	
+        	User user = userDAO.getUserByName(userName);
+			Group userGroup = groupDAO.getGroupByName(user.getUserGroup());
+			model.addAttribute("user", user);
+			model.addAttribute("userGroup", userGroup);
+			
+			DocDAO.setServletContext(this.servletContext);
+        		
+            	String doc_id = user.getUserName()+DocumentPrivacyService.generateUniqueDocID();
+            	Document doc = new Document();
+            	doc.setDocAuthor(user.getUserName());
+            	doc.setDocContent(docDes);
+            	doc.setDocName(docName);
+            	doc.setDocType(docType);
+            	doc.setDocUrl("foo.com");
+            	doc.setDocID(doc_id);
+            	doc.setDocGroup(userGroup.getGroupName());
+            	
+                DocDAO.addDocument(doc, date);
+                displayDAO.addNewDocumentToGroup(date, doc, userGroup);
+                displayDAO.addNewDocumentToUser(date, doc, user);
+                model.addAttribute("doc", doc);
+            
+            
+        	Result_display display = null;
+			
+			display = displayDAO.getDisplaybyDateandGroup(date, userGroup);
+			List<Document> displayList = new ArrayList<Document>();
+			
+			if(display.getDocs()!=null){
+				for(Document document : display.getDocs()){
+					Document newDocument = DocDAO.getDocumentByDateandGroup(document.getDocDate(), userGroup);
+					if(!newDocument.isDocPrivate()){
+						if(newDocument.getDocType()!=null&&(newDocument.getDocType().equals(".jpg")||newDocument.getDocType().equals("textDoc")))
+							displayList.add(0, newDocument);
+					}
+				}
+				display.setDocs(displayList);
+			}
+			
+			model.addAttribute("display", display);
+
+		}
+       
+		return "index";
+	}
+	
 	@Override
 	public void setServletContext(ServletContext ctx) {
 		this.servletContext = ctx;		

@@ -48,7 +48,6 @@ pageEncoding="ISO-8859-1"%>
 	<link rel="stylesheet" href="./resources/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
  	
  	
- 	
 	<!-- Custom Fonts -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
@@ -124,7 +123,8 @@ pageEncoding="ISO-8859-1"%>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li >
-                        <a href="index.html"><i class="icon-file-text-alt"></i> Textual Findings</a>
+                    	<a href="#" data-toggle="modal" data-target="#basicModal"><i class="icon-file-text-alt"></i> Textual Findings</a>
+                        
                     </li>
                     <li>
                         <a href="ResultFigureUpload"><i class="fa fa-fw fa-bar-chart-o"></i> Result Figure Upload</a>
@@ -195,17 +195,43 @@ pageEncoding="ISO-8859-1"%>
                    		  <form method="post" action="AddDocument" name="submit" enctype="multipart/form-data" >
                    		  	<div class = "row">
                     			<div class = "col-md-3"><input type="file" name="fileField" ></div>
-                    			<div class = "col-md-2"><input type="submit" class="btn btn-primary" name="submit" value="Submit" ></div>
-                    			<div class = "col-md-7" style="font-size:15px">
+                    			<div class = "col-md-6" style="font-size:15px">
                     				<div>Give your document some description:</div>
                     				<div><textarea class="form-control" name="docDescription" placeholder="What kind of data this is?" rows="2"></textarea></div>
                     			</div>
+                    			<div class = "col-md-3"><br><br><input type="submit" class="btn btn-primary" name="submit" value="Submit" ></div>
+                    			
                     		</div>
                     	  </form> 
                     	 </div>
                     </div>
-                    
-				
+              
+             
+   
+   				<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    				<div class="modal-dialog">
+        				<div class="modal-content">
+            				<div class="modal-header">
+            					<h4 class="modal-title" id="myModalLabel">Texual Findings</h4>
+            				</div>
+            				<form method="post" action="AddTextDocument" name="submit" enctype="multipart/form-data" >
+            				<div class="modal-body">
+                				<div><h4>Coin the term!</h4></div>
+                    			<div><input type="text" class="form-control" name="docName"></input></div><br>
+                    			<div>What have you discovered today?</div>
+                    			<div><textarea class="form-control" name="docDescription" placeholder="Some detailed description . . ." rows="12"></textarea></div>
+                    				
+            				</div>
+            				<div class="modal-footer">
+                				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                				<button type="submit" class="btn btn-primary">Sumbit</button>
+        					</div>
+        					</form> 
+    					</div>
+  					</div>
+				</div>
+
+   
                 <h4>Or drag and drop files below</h4>
                  <div class="row">
                  	
@@ -283,15 +309,18 @@ pageEncoding="ISO-8859-1"%>
       								
                                     <span class="pull-left" onclick="javascript:load_content('pnuts');">
                                     </span>
-                                    <div id="box" style="overflow:auto">
-                                    	<a class="fancybox" rel="group" href=".${document.docUrl}"><img src=".${document.docUrl}" alt="" width ="720" height="420" /></a>
-	                                  
-                                   	</div>
-                                	
-                                	
-                                    <div class="row">
-                                    	<span class="pull-left">Description: ${document.docContent}</span>
-                                    </div>
+                                    
+                                    <c:choose>
+  										<c:when test="${document.docType eq 'textDoc'}">
+  										</c:when>
+  										<c:otherwise>
+  											<div id="box" style="overflow:auto">
+                                    			<a class="fancybox" rel="group" href=".${document.docUrl}"><img src=".${document.docUrl}" alt="" width ="720" height="420" /></a>
+                                   			</div>
+  										</c:otherwise>
+									</c:choose>
+									
+                                    <span class="pull-left">Description: ${document.docContent}</span>
                                     
 									<span class="pull-left"></span>
                                     <span class="pull-right"></span>

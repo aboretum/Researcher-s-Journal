@@ -40,8 +40,11 @@ public class DocumentDAO {
 	}
 	
 	public void addDocument(Document document, Date date){
-		FigureDocument figure = (FigureDocument)document;
-		Binary data = FigureIOService.figureTOBinary(figure);
+		Binary data = null;
+		if(!document.getDocType().equals("textDoc")){
+			FigureDocument figure = (FigureDocument)document;
+			data = FigureIOService.figureTOBinary(figure);
+		}
 
 		BasicDBObject doc = new BasicDBObject("doc_name", document.getDocName()).
 				append("doc_type", document.getDocType()).
@@ -55,6 +58,7 @@ public class DocumentDAO {
 				append("doc_group", document.getDocGroup());
 		
 		col.insert(doc);
+		
 	}
 	
 	public Document getDocumentByDateandGroup(Date date, Group grp){
@@ -212,6 +216,16 @@ public class DocumentDAO {
 					figureDoc.setImageFile(file);
 					figureDoc.setDocUrl(fileName);
 					document = (Document)figureDoc;
+					docList.add(document);
+				}else if(doc.get("doc_type").toString().equals("textDoc")){
+					Document document = new Document();
+					document.setDocName(doc.get("doc_name").toString());
+					document.setDocType(doc.get("doc_type").toString());
+					document.setDocContent(doc.get("doc_content").toString());
+					document.setDocID(doc.get("doc_id").toString());
+					document.setDocAuthor(doc.get("doc_author").toString());
+					document.setDocDate((Date)doc.get("doc_date"));
+					document.setDocPrivate((Boolean)doc.get("doc_private"));
 					docList.add(document);
 				}
 				
