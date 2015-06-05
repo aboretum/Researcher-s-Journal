@@ -4,6 +4,26 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	
+	<bean id="demoTimerTask" class="com.ase.util.GarbageCollector"></bean>
+ 
+    <bean id="timerTaskFactoryBean"
+            class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
+        <property name="targetObject" ref="demoTimerTask"></property>
+        <property name="targetMethod" value="deleteFiles"></property>
+    </bean>
+ 
+    <bean id="timerTask"
+        class="org.springframework.scheduling.timer.ScheduledTimerTask">
+        <property name="timerTask" ref="timerTaskFactoryBean"></property>
+        <property name="period" value="5000000"></property>
+    </bean>
+ 
+    <bean class="org.springframework.scheduling.timer.TimerFactoryBean">
+        <property name="scheduledTimerTasks">
+            <list>
+                <ref local="timerTask"></ref>
+            </list>
+        </property>
+    </bean>
 
 </beans>
